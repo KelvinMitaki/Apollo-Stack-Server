@@ -3,6 +3,7 @@ import { Request } from "express";
 import { User, UserAttrs } from "./models/User";
 import { RegisterUserValidation } from "./validation";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export interface Context {
   req: Request;
@@ -38,6 +39,26 @@ export const resolvers = {
       const user = User.build(args.values);
       await user.save();
       return user;
+    },
+    async loginUser(
+      prt: any,
+      args: { email: string; password: string },
+      { User }: Context
+    ) {
+      const user = await User.findOne({ email: args.email.toLowerCase() });
+      if (!user) {
+        throw new AuthenticationError("Invalid email or password");
+      }
+      const isMatch = await bcrypt.compare(args.password, user.password);
+      if (!isMatch) {
+        throw new AuthenticationError("Invalid email or password");
+      }
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
+        expiresIn: "1 day"
+      });
+      return {
+        token
+      };
     }
   }
 };
