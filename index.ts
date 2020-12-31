@@ -2,13 +2,15 @@ import { ApolloServer } from "apollo-server";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
 import mongoose from "mongoose";
+import { User } from "./models/User";
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context({ req }) {
     return {
-      req
+      req,
+      User
     };
   }
 });

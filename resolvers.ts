@@ -1,4 +1,8 @@
+import { AuthenticationError } from "apollo-server";
 import { Request } from "express";
+import { User, UserAttrs } from "./models/User";
+import { RegisterUserValidation } from "./validation";
+import bcrypt from "bcrypt";
 
 const users = [
   {
@@ -17,6 +21,7 @@ const users = [
 
 export interface Context {
   req: Request;
+  User: typeof User;
 }
 
 export const resolvers = {
@@ -26,6 +31,22 @@ export const resolvers = {
     }
   },
   Mutation: {
-    registerUser(prt: any, args: any, ctx: Context) {}
+    async registerUser(prt: any, args: UserAttrs, { User, req }: Context) {
+      RegisterUserValidation(args);
+      const userExist = await User.findOne({
+        email: args.email.toLocaleLowerCase()
+      });
+      if (userExist) {
+        throw new AuthenticationError("A user with that email already exists");
+      }
+      try {
+        args.password = await bcrypt.hash(args.password, 10);
+      } catch (error) {
+        throw new Error("Error hashing password");
+      }
+      const user = User.build(args);
+      user.save();
+      return user;
+    }
   }
 };
