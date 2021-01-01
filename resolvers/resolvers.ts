@@ -1,7 +1,7 @@
 import { AuthenticationError } from "apollo-server";
 import { Request } from "express";
-import { User, UserAttrs } from "./models/User";
-import { RegisterUserValidation } from "./validation";
+import { User, UserAttrs } from "../models/User";
+import { RegisterUserValidation } from "../middlewares/validation";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

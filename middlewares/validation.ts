@@ -1,4 +1,4 @@
-import { UserAttrs } from "./models/User";
+import { UserAttrs } from "../models/User";
 import validator from "validator";
 import { UserInputError } from "apollo-server";
 

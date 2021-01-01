@@ -1,6 +1,6 @@
 import { ApolloServer } from "apollo-server";
-import { resolvers } from "./resolvers";
-import { typeDefs } from "./typeDefs";
+import { resolvers } from "./resolvers/resolvers";
+import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
 
