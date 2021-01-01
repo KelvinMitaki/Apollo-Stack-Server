@@ -22,6 +22,9 @@ export const resolvers = {
       );
       const user = await User.findById(token);
       return user;
+    },
+    users(prt: any, args: any, { User }: Context) {
+      return User.find();
     }
   },
   Mutation: {
