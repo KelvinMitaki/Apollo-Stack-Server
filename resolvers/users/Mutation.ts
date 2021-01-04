@@ -9,12 +9,18 @@ export const UserMutations = {
   async registerUser(
     prt: any,
     args: { values: UserAttrs },
-    { User, req }: Context
+    { User, Agent }: Context
   ) {
     RegisterUserValidation(args.values);
-    const userExist = await User.findOne({
+    let userExist;
+    userExist = await User.findOne({
       email: args.values.email.toLowerCase()
     });
+    if (!userExist) {
+      userExist = await Agent.findOne({
+        email: args.values.email.toLowerCase()
+      });
+    }
     if (userExist) {
       throw new AuthenticationError("A user with that email already exists");
     }
@@ -31,9 +37,13 @@ export const UserMutations = {
   async loginUser(
     prt: any,
     args: { email: string; password: string },
-    { User }: Context
+    { User, Agent }: Context
   ) {
-    const user = await User.findOne({ email: args.email.toLowerCase() });
+    let user;
+    user = await User.findOne({ email: args.email.toLowerCase() });
+    if (!user) {
+      user = await Agent.findOne({ email: args.email.toLowerCase() });
+    }
     if (!user) {
       throw new AuthenticationError("Invalid email or password");
     }

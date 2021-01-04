@@ -3,6 +3,7 @@ import { resolvers } from "./resolvers/resolvers";
 import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
+import { Agent } from "./models/Agent";
 
 const server = new ApolloServer({
   typeDefs,
@@ -10,7 +11,8 @@ const server = new ApolloServer({
   context({ req }) {
     return {
       req,
-      User
+      User,
+      Agent
     };
   },
   cors: {

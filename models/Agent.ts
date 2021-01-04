@@ -18,6 +18,7 @@ export interface AgentDoc extends mongoose.Document {
   phoneNumber: number;
   address: string;
   profilePhoto?: string;
+  isVerified: boolean;
 }
 
 export interface AgentModel extends mongoose.Model<AgentDoc> {
@@ -48,6 +49,10 @@ const AgentSchema = new mongoose.Schema(
     },
     profilePhoto: {
       type: String
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
     }
   },
   {
