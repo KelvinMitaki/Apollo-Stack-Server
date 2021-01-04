@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieSession from "cookie-session";
 import { ApolloServer } from "apollo-server-express";
 import { resolvers } from "./resolvers/resolvers";
 import { typeDefs } from "./schema/typeDefs";
@@ -8,6 +9,7 @@ import { User } from "./models/User";
 import { Agent } from "./models/Agent";
 
 const app = express();
+app.set("trust proxy", "1");
 
 app.use(
   cors({
@@ -15,6 +17,15 @@ app.use(
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
         : "https://apollo-stack-51stit47a.vercel.app"
+  })
+);
+
+app.use(
+  cookieSession({
+    secret: process.env.JWT_SECRET,
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: process.env.NODE_ENV !== "development",
+    httpOnly: true
   })
 );
 
