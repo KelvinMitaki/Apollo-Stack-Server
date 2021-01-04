@@ -14,14 +14,16 @@ export const typeDefs = gql`
   input RegisterInput {
     email: String!
     password: String!
-    fullName: String!
+    firstName: String!
+    lastName: String!
   }
   type Token {
     token: String!
   }
   type User {
     _id: ID!
-    fullName: String!
+    firstName: String!
+    lastName: String!
     email: String!
   }
 `;
