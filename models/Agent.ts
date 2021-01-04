@@ -29,7 +29,8 @@ const AgentSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     password: {
       type: String,
