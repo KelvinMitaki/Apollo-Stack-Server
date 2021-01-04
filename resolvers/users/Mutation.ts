@@ -9,7 +9,7 @@ export const UserMutations = {
   async registerUser(
     prt: any,
     args: { values: UserAttrs },
-    { User, Agent }: Context
+    { User, Agent, req }: Context
   ) {
     RegisterUserValidation(args.values);
     let userExist;
@@ -37,7 +37,7 @@ export const UserMutations = {
   async loginUser(
     prt: any,
     args: { email: string; password: string },
-    { User, Agent }: Context
+    { User, Agent, req, res }: Context
   ) {
     let user;
     user = await User.findOne({ email: args.email.toLowerCase() });
@@ -54,6 +54,7 @@ export const UserMutations = {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "1 day"
     });
+    req.session!.token = token;
     return {
       token
     };

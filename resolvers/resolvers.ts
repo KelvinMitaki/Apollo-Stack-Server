@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { User } from "../models/User";
 import { UserQueries } from "./users/Query";
 import { UserMutations } from "./users/Mutation";
@@ -6,6 +6,7 @@ import { Agent } from "../models/Agent";
 
 export interface Context {
   req: Request;
+  res: Response;
   User: typeof User;
   Agent: typeof Agent;
 }
