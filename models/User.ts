@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 export interface UserAttrs {
   email: string;
   password: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface UserModel extends mongoose.Model<UserDoc> {
@@ -26,7 +28,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    fullName: {
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
       type: String,
       required: true
     }
