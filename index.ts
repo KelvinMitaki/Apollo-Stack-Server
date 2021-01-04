@@ -1,9 +1,22 @@
-import { ApolloServer } from "apollo-server";
+import express from "express";
+import cors from "cors";
+import { ApolloServer } from "apollo-server-express";
 import { resolvers } from "./resolvers/resolvers";
 import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Agent } from "./models/Agent";
+
+const app = express();
+
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:3001"
+        : "https://apollo-stack-51stit47a.vercel.app"
+  })
+);
 
 const server = new ApolloServer({
   typeDefs,
@@ -14,12 +27,6 @@ const server = new ApolloServer({
       User,
       Agent
     };
-  },
-  cors: {
-    origin:
-      process.env.NODE_ENV !== "production"
-        ? "http://localhost:3001"
-        : "https://apollo-stack-51stit47a.vercel.app"
   }
 });
 
@@ -41,6 +48,9 @@ const MongooseConnect = async () => {
   }
 };
 MongooseConnect();
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-  console.log(`server started at ${url}`);
+
+server.applyMiddleware({ app, path: "/graphql" });
+
+app.listen({ port: process.env.PORT || 4000 }, () => {
+  console.log(`server started at http://localhost:4000${server.graphqlPath}`);
 });

@@ -1,6 +1,6 @@
 import { UserAttrs } from "../models/User";
 import validator from "validator";
-import { UserInputError } from "apollo-server";
+import { UserInputError } from "apollo-server-express";
 
 export const RegisterUserValidation = (user: UserAttrs) => {
   const { email, password, firstName, lastName } = user;

@@ -1,4 +1,3 @@
-import { AuthenticationError } from "apollo-server";
 import { Request } from "express";
 import { User } from "../models/User";
 import { UserQueries } from "./users/Query";
