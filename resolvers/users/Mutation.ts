@@ -55,8 +55,6 @@ export const UserMutations = {
       expiresIn: "1 day"
     });
     req.session!.token = token;
-    return {
-      token
-    };
+    return user;
   }
 };

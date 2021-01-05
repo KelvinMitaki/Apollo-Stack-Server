@@ -8,7 +8,7 @@ export const typeDefs = gql`
 
   type Mutation {
     registerUser(values: RegisterInput!): User!
-    loginUser(email: String!, password: String!): Token!
+    loginUser(email: String!, password: String!): User!
   }
 
   input RegisterInput {
@@ -16,9 +16,6 @@ export const typeDefs = gql`
     password: String!
     firstName: String!
     lastName: String!
-  }
-  type Token {
-    token: String!
   }
   type User {
     _id: ID!

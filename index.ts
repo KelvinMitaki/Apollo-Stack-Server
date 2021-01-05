@@ -70,8 +70,7 @@ server.applyMiddleware({
     origin:
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
-        : "https://apollo-stack-51stit47a.vercel.app",
-    allowedHeaders: ["Content-Type", "Authorization"]
+        : "https://apollo-stack-51stit47a.vercel.app"
   }
 });
 
