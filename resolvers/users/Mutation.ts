@@ -55,6 +55,11 @@ export const UserMutations = {
       expiresIn: "1 day"
     });
     req.session!.token = token;
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   maxAge: 1000 * 60 * 60 * 24
+    // });
+    console.log(req.headers);
     return user;
   }
 };

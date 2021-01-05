@@ -11,22 +11,13 @@ import { Agent } from "./models/Agent";
 const app = express();
 app.set("trust proxy", "1");
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin:
-//       process.env.NODE_ENV !== "production"
-//         ? "http://localhost:3001"
-//         : "https://apollo-stack-51stit47a.vercel.app"
-//   })
-// );
-
 app.use(
   cookieSession({
     secret: process.env.JWT_SECRET,
     maxAge: 1000 * 60 * 60 * 24,
     secure: process.env.NODE_ENV !== "development",
-    httpOnly: true
+    httpOnly: true,
+    signed: true
   })
 );
 
@@ -70,7 +61,8 @@ server.applyMiddleware({
     origin:
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
-        : "https://apollo-stack-51stit47a.vercel.app"
+        : "https://apollo-stack-51stit47a.vercel.app",
+    allowedHeaders: ["Content-Type", "Authorization"]
   }
 });
 
