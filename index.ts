@@ -7,12 +7,9 @@ import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Agent } from "./models/Agent";
-console.log("reached");
-// @ts-ignore
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 const app = express();
 app.set("trust proxy", "1");
-console.log("reached 2");
 
 app.use(
   cookieSession({
@@ -24,7 +21,6 @@ app.use(
   })
 );
 
-console.log("reached 3");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
