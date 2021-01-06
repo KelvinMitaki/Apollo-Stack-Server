@@ -9,8 +9,16 @@ import { User } from "./models/User";
 import { Agent } from "./models/Agent";
 
 const app = express();
-// app.set("trust proxy", "1");
-
+app.set("trust proxy", "1");
+app.use(
+  cors({
+    credentials: true,
+    origin:
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:3001"
+        : "https://apollo-stack-51stit47a.vercel.app"
+  })
+);
 app.use(
   cookieSession({
     secret: process.env.JWT_SECRET,
@@ -55,15 +63,7 @@ MongooseConnect();
 
 server.applyMiddleware({
   app,
-  path: "/graphql",
-  cors: {
-    credentials: true,
-    origin:
-      process.env.NODE_ENV !== "production"
-        ? "http://localhost:3001"
-        : "https://apollo-stack-51stit47a.vercel.app",
-    allowedHeaders: ["Content-Type", "Authorization"]
-  }
+  path: "/graphql"
 });
 
 app.listen({ port: process.env.PORT || 4000 }, () => {
