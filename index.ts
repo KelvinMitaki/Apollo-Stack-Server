@@ -16,8 +16,7 @@ app.use(
     origin:
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
-        : "http://localhost:3001"
-    // "https://apollo-stack-51stit47a.vercel.app"
+        : "https://apollo-stack.vercel.app"
   })
 );
 app.use(
