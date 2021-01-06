@@ -7,18 +7,11 @@ import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Agent } from "./models/Agent";
-
+// @ts-ignore
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 const app = express();
-// app.set("trust proxy", "1");
-app.use(
-  cors({
-    credentials: true,
-    origin:
-      process.env.NODE_ENV !== "production"
-        ? "http://localhost:3001"
-        : "https://apollo-stack.vercel.app"
-  })
-);
+app.set("trust proxy", "1");
+
 app.use(
   cookieSession({
     secret: process.env.JWT_SECRET,
@@ -63,7 +56,15 @@ MongooseConnect();
 
 server.applyMiddleware({
   app,
-  path: "/graphql"
+  path: "/graphql",
+  cors: {
+    credentials: true,
+    origin:
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:3001"
+        : "https://apollo-stack-51stit47a.vercel.app",
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }
 });
 
 app.listen({ port: process.env.PORT || 4000 }, () => {
