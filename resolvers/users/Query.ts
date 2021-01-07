@@ -3,20 +3,26 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req }: Context) {
-    if (
-      !req.headers.cookie ||
-      typeof req.headers.cookie === "undefined" ||
-      req.headers.cookie === "undefined"
-    ) {
+    if (!req.session!.token) {
       return null;
     }
-    console.log(req.headers.cookie);
-    const token = jwt.verify(
-      req.headers.cookie.split("=")[1],
-      process.env.JWT_SECRET!
-    ) as {
+    const token = jwt.verify(req.session!.token, process.env.JWT_SECRET!) as {
       _id: string;
     };
+    // if (
+    //   !req.headers.cookie ||
+    //   typeof req.headers.cookie === "undefined" ||
+    //   req.headers.cookie === "undefined"
+    // ) {
+    //   return null;
+    // }
+    // console.log(req.headers.cookie);
+    // const token = jwt.verify(
+    //   req.headers.cookie.split("=")[1],
+    //   process.env.JWT_SECRET!
+    // ) as {
+    //   _id: string;
+    // };
     const user = await User.findById(token._id);
     return user;
   },

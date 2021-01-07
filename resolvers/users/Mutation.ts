@@ -54,15 +54,14 @@ export const UserMutations = {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "1 day"
     });
-    // req.session!.token = token;
-    res.cookie("token", token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-      sameSite: "none",
-      secure: process.env.NODE_ENV !== "development",
-      domain: "https://apollo-stack.vercel.app"
-    });
-    console.log(req.headers);
+    req.session!.token = token;
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+    //   sameSite: "none",
+    //   secure: process.env.NODE_ENV !== "development"
+    // });
+    // console.log(req.headers);
     return user;
   }
 };

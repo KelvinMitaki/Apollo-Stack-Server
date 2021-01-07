@@ -11,18 +11,15 @@ import { Agent } from "./models/Agent";
 const app = express();
 app.set("trust proxy", "1");
 
-// app.use(
-//   cookieSession({
-//     secret: process.env.JWT_SECRET,
-//     maxAge: 1000 * 60 * 60 * 24,
-//     secure: process.env.NODE_ENV !== "development",
-//     httpOnly: true,
-//     signed: true,
-//     ...(process.env.NODE_ENV !== "development" && {
-//       domain: "https://apollo-stack.vercel.app"
-//     })
-//   })
-// );
+app.use(
+  cookieSession({
+    secret: process.env.JWT_SECRET,
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+    sameSite: "none",
+    secure: process.env.NODE_ENV !== "development"
+  })
+);
 
 const server = new ApolloServer({
   typeDefs,
