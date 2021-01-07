@@ -54,11 +54,11 @@ export const UserMutations = {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "1 day"
     });
-    req.session!.token = token;
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   maxAge: 1000 * 60 * 60 * 24
-    // });
+    // req.session!.token = token;
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24
+    });
     console.log(req.headers);
     return user;
   }
