@@ -6,11 +6,12 @@ export const UserQueries = {
     if (
       !req.headers.cookie ||
       typeof req.headers.cookie === "undefined" ||
-      req.headers.cookie === "undefined"
+      req.headers.cookie === "undefined" ||
+      req.headers.cookie.split("=").length < 2 ||
+      req.headers.cookie.split("=")[1].trim().length === 0
     ) {
       return null;
     }
-    console.log(req.headers.cookie);
     const token = jwt.verify(
       req.headers.cookie.split("=")[1],
       process.env.JWT_SECRET!

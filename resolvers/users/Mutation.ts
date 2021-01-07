@@ -61,7 +61,6 @@ export const UserMutations = {
     //   ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
     //   secure: process.env.NODE_ENV !== "development"
     // });
-    // console.log(req.headers);
     return { token };
   }
 };
