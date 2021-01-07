@@ -39,6 +39,7 @@ export const UserMutations = {
     args: { email: string; password: string },
     { User, Agent, req, res }: Context
   ) {
+    console.log("users", await User.find());
     let user;
     user = await User.findOne({ email: args.email.toLowerCase() });
     console.log(user);
