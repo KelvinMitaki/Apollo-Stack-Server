@@ -57,7 +57,8 @@ export const UserMutations = {
     // req.session!.token = token;
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "none"
     });
     console.log(req.headers);
     return user;
