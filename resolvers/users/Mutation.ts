@@ -58,7 +58,8 @@ export const UserMutations = {
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none"
+      sameSite: "none",
+      secure: process.env.NODE_ENV !== "development"
     });
     console.log(req.headers);
     return user;
