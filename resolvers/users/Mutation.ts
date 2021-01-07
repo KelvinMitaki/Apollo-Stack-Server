@@ -59,7 +59,8 @@ export const UserMutations = {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       sameSite: "none",
-      secure: process.env.NODE_ENV !== "development"
+      secure: process.env.NODE_ENV !== "development",
+      domain: "https://apollo-stack.vercel.app"
     });
     console.log(req.headers);
     return user;
