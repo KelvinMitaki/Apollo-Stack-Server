@@ -3,7 +3,11 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req }: Context) {
-    if (!req.headers.cookie) {
+    if (
+      !req.headers.cookie ||
+      typeof req.headers.cookie === "undefined" ||
+      req.headers.cookie === "undefined"
+    ) {
       return null;
     }
     console.log(req.headers.cookie);
