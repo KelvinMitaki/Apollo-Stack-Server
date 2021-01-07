@@ -41,6 +41,7 @@ export const UserMutations = {
   ) {
     let user;
     user = await User.findOne({ email: args.email.toLowerCase() });
+    console.log(user);
     if (!user) {
       user = await Agent.findOne({ email: args.email.toLowerCase() });
     }
