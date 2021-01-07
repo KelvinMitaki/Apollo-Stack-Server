@@ -3,6 +3,7 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req }: Context) {
+    console.log(req.session!.token);
     if (!req.session!.token) {
       return null;
     }

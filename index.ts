@@ -17,7 +17,10 @@ app.use(
     maxAge: 1000 * 60 * 60 * 24,
     secure: process.env.NODE_ENV !== "development",
     httpOnly: true,
-    signed: true
+    signed: true,
+    ...(process.env.NODE_ENV !== "development" && {
+      domain: "https://apollo-stack.vercel.app"
+    })
   })
 );
 
@@ -61,8 +64,7 @@ server.applyMiddleware({
     origin:
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
-        : "https://apollo-stack.vercel.app",
-    allowedHeaders: ["Content-Type", "Authorization"]
+        : "https://apollo-stack.vercel.app"
   }
 });
 
