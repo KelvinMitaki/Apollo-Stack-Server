@@ -8,7 +8,7 @@ export const typeDefs = gql`
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
-    RegisterAgent(values: RegisterAgentInput!): Agent!
+    registerAgent(values: RegisterAgentInput!): Agent!
     loginUser(email: String!, password: String!): Token!
   }
 
