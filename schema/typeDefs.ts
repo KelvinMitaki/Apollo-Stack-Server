@@ -10,6 +10,8 @@ export const typeDefs = gql`
     registerUser(values: RegisterInput!): User!
     registerAgent(values: RegisterAgentInput!): Agent!
     loginUser(email: String!, password: String!): Token!
+    editUserProfile(values: EditUserProfile!): User!
+    editAgentProfile(values: EditAgentProfile!): Agent!
   }
 
   input RegisterInput {
@@ -26,6 +28,20 @@ export const typeDefs = gql`
     phoneNumber: Int!
     address: String!
   }
+  input EditUserProfile {
+    email: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: Int
+  }
+  input EditAgentProfile {
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: Int!
+    address: String!
+  }
   type Token {
     token: String!
   }
@@ -35,6 +51,7 @@ export const typeDefs = gql`
     lastName: String!
     email: String!
     phoneNumber: String
+    isAgent: Boolean
   }
   type Agent {
     _id: ID!
@@ -45,5 +62,6 @@ export const typeDefs = gql`
     phoneNumber: Int!
     address: String!
     profilePhoto: String
+    isAgent: Boolean!
   }
 `;
