@@ -62,7 +62,7 @@ server.applyMiddleware({
       process.env.NODE_ENV !== "production"
         ? "http://localhost:3001"
         : "https://apollo-stack.vercel.app",
-    allowedHeaders: "Access-Control-Allow-Credentials"
+    allowedHeaders: ["Content-Type", "Authorization"]
   }
 });
 
