@@ -55,15 +55,15 @@ MongooseConnect();
 
 server.applyMiddleware({
   app,
-  path: "/graphql",
-  cors: {
-    credentials: true,
-    origin:
-      process.env.NODE_ENV !== "production"
-        ? "http://localhost:3001"
-        : "https://apollo-stack.vercel.app",
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "cookie"]
-  }
+  path: "/graphql"
+  // cors: {
+  //   credentials: true,
+  //   origin:
+  //     process.env.NODE_ENV !== "production"
+  //       ? "http://localhost:3001"
+  //       : "https://apollo-stack.vercel.app",
+  //   allowedHeaders: ["Content-Type", "Authorization", "Cookie", "cookie"]
+  // }
 });
 
 app.listen({ port: process.env.PORT || 4000 }, () => {
