@@ -3,8 +3,8 @@ import validator from "validator";
 import { UserInputError } from "apollo-server-express";
 import { AgentAttrs } from "../models/Agent";
 
-export const RegisterUserValidation = (user: UserAttrs) => {
-  const { email, password, firstName, lastName } = user;
+export const RegisterUserValidation = (args: UserAttrs) => {
+  const { email, password, firstName, lastName } = args;
   if (!email || (email && !validator.isEmail(email))) {
     throw new UserInputError("invalid email");
   }
@@ -18,8 +18,8 @@ export const RegisterUserValidation = (user: UserAttrs) => {
     throw new UserInputError("enter a valid first name");
   }
 };
-export const RegisterAgentValidation = (user: AgentAttrs) => {
-  const { email, password, firstName, lastName, phoneNumber, address } = user;
+export const RegisterAgentValidation = (args: AgentAttrs) => {
+  const { email, password, firstName, lastName, phoneNumber, address } = args;
   if (!email || (email && !validator.isEmail(email))) {
     throw new UserInputError("invalid email");
   }
