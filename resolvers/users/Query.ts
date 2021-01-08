@@ -25,5 +25,9 @@ export const UserQueries = {
   },
   users(prt: any, args: any, { User }: Context) {
     return User.find();
+  },
+  logoutUser(prt: any, args: any, { res }: Context) {
+    res.clearCookie("token");
+    return null;
   }
 };

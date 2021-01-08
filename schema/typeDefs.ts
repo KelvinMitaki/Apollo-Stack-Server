@@ -4,8 +4,8 @@ export const typeDefs = gql`
   type Query {
     currentUser: User
     users: [User!]!
+    logoutUser: User
   }
-
   type Mutation {
     registerUser(values: RegisterInput!): User!
     loginUser(email: String!, password: String!): Token!
