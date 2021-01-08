@@ -57,7 +57,7 @@ export const UserMutations = {
     // req.session!.token = token;
     res.cookie("token", token, {
       httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
       secure: process.env.NODE_ENV !== "development"
     });

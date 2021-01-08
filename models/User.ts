@@ -36,6 +36,9 @@ const UserSchema = new mongoose.Schema(
     lastName: {
       type: String,
       required: true
+    },
+    phoneNumber: {
+      type: Number
     }
   },
   {

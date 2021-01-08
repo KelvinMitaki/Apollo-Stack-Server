@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import { UserQueries } from "./users/Query";
 import { UserMutations } from "./users/Mutation";
 import { Agent } from "../models/Agent";
+import { AgentMutations } from "./agents/Mutation";
 
 export interface Context {
   req: Request;
@@ -16,6 +17,7 @@ export const resolvers = {
     ...UserQueries
   },
   Mutation: {
-    ...UserMutations
+    ...UserMutations,
+    ...AgentMutations
   }
 };

@@ -8,6 +8,7 @@ export const typeDefs = gql`
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
+    RegisterAgent(values: RegisterAgentInput!): Agent!
     loginUser(email: String!, password: String!): Token!
   }
 
@@ -17,6 +18,14 @@ export const typeDefs = gql`
     firstName: String!
     lastName: String!
   }
+  input RegisterAgentInput {
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: Int!
+    address: String!
+  }
   type Token {
     token: String!
   }
@@ -25,5 +34,16 @@ export const typeDefs = gql`
     firstName: String!
     lastName: String!
     email: String!
+    phoneNumber: String
+  }
+  type Agent {
+    _id: ID!
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: Int!
+    address: String!
+    profilePhoto: String
   }
 `;
