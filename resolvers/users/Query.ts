@@ -48,7 +48,8 @@ export const UserQueries = {
   },
   logoutUser(prt: any, args: any, { res }: Context) {
     res.clearCookie("token", {
-      ...(process.env.NODE_ENV !== "development" && { sameSite: "none" })
+      ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
+      secure: process.env.NODE_ENV !== "development"
     });
     return null;
   }
