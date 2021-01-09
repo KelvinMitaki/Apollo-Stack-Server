@@ -4,7 +4,6 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req, Agent }: Context) {
-    console.log(req.headers.cookie);
     if (
       !req.headers.cookie ||
       typeof req.headers.cookie === "undefined" ||
@@ -19,9 +18,9 @@ export const UserQueries = {
       .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }))
       .find(
         t =>
-          (Object.values(t)[0].trim().length !== 0 &&
-            Object.keys(t)[0] === "token") ||
-          Object.keys(t)[0] === "client_token"
+          Object.values(t)[0].trim().length !== 0 &&
+          (Object.keys(t)[0] === "token" ||
+            Object.keys(t)[0] === "client_token")
       );
     if (!split_token) {
       return null;
