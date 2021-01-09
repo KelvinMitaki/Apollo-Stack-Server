@@ -60,9 +60,8 @@ server.applyMiddleware({
     credentials: true,
     origin:
       process.env.NODE_ENV !== "production"
-        ? "http://localhost:3001"
-        : "https://apollo-stack.vercel.app",
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"]
+        ? "http://localhost"
+        : "https://apollo-stack.vercel.app"
   }
 });
 
