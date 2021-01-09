@@ -7,6 +7,7 @@ import { typeDefs } from "./schema/typeDefs";
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Agent } from "./models/Agent";
+import { Property } from "./models/Property";
 
 const app = express();
 app.set("trust proxy", "1");
@@ -20,7 +21,6 @@ app.set("trust proxy", "1");
 //     secure: process.env.NODE_ENV !== "development"
 //   })
 // );
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -29,6 +29,7 @@ const server = new ApolloServer({
       req,
       User,
       Agent,
+      Property,
       res
     };
   }
