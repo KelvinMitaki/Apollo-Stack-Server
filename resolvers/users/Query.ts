@@ -1,3 +1,4 @@
+import { AuthenticationError } from "apollo-server-express";
 import jwt from "jsonwebtoken";
 import { Context } from "../resolvers";
 
@@ -13,18 +14,35 @@ export const UserQueries = {
     ) {
       return null;
     }
-    const token = jwt.verify(
-      req.headers.cookie.split("=")[1],
-      process.env.JWT_SECRET!
-    ) as {
-      _id: string;
-    };
-    let user;
-    user = await User.findById(token._id);
-    if (!user) {
-      user = await Agent.findById(token._id);
+    const split_token = req.headers.cookie
+      .split("; ")
+      .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }))
+      .find(
+        t =>
+          (Object.values(t)[0].trim().length !== 0 &&
+            Object.keys(t)[0] === "token") ||
+          Object.keys(t)[0] === "client_token"
+      );
+    if (!split_token) {
+      return null;
     }
-    return user;
+    try {
+      const token = jwt.verify(
+        Object.values(split_token)[0],
+        process.env.JWT_SECRET!
+      ) as {
+        _id: string;
+      };
+
+      let user;
+      user = await User.findById(token._id);
+      if (!user) {
+        user = await Agent.findById(token._id);
+      }
+      return user;
+    } catch (error) {
+      throw new AuthenticationError("Invalid token");
+    }
   },
   users(prt: any, args: any, { User }: Context) {
     return User.find();
