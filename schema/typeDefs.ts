@@ -12,6 +12,7 @@ export const typeDefs = gql`
     loginUser(email: String!, password: String!): Token!
     editUserProfile(values: EditUserProfile!): User!
     editAgentProfile(values: EditAgentProfile!): Agent!
+    addProperty(values: AddProperty!): Property!
   }
 
   input RegisterInput {
@@ -42,6 +43,7 @@ export const typeDefs = gql`
     phoneNumber: Int!
     address: String!
   }
+
   type Token {
     token: String!
   }
@@ -89,6 +91,34 @@ export const typeDefs = gql`
     serviceCharge: Int
     repossessed: Boolean!
     onAuction: Boolean!
+    auctionDate: String
+    auctionVenue: String
+    createdAt: String!
+    updatedAt: String!
+  }
+  input AddProperty {
+    reference: Int!
+    location: String!
+    streetAddress: String!
+    category: String!
+    price: Int!
+    bedrooms: Int!
+    bathrooms: Int!
+    type: String!
+    status: String!
+    heading: String!
+    description: String!
+    expiryDate: String!
+    images: [String!]!
+    parkingLots: Int
+    plinthArea: Int
+    lotArea: Int
+    furnished: Boolean
+    petFriendly: Boolean
+    garden: Boolean
+    serviceCharge: Int
+    repossessed: Boolean
+    onAuction: Boolean
     auctionDate: String
     auctionVenue: String
   }

@@ -16,7 +16,7 @@ export interface PropertyAttrs {
   expiryDate: Date;
   images: string[];
   parkingLots?: number;
-  homeArea?: number;
+  plinthArea?: number;
   lotArea?: number;
   furnished?: boolean;
   petFriendly?: boolean;
@@ -43,7 +43,7 @@ export interface PropertyDoc extends mongoose.Document {
   expiryDate: Date;
   images: string[];
   parkingLots?: number;
-  homeArea?: number;
+  plinthArea?: number;
   lotArea?: number;
   furnished?: boolean;
   petFriendly?: boolean;
@@ -97,7 +97,7 @@ const PropertySchema = new mongoose.Schema(
     parkingLots: {
       type: Number
     },
-    homeArea: {
+    plinthArea: {
       type: Number
     },
     lotArea: {
