@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Agent } from "../models/Agent";
+import { Agent, AgentDoc } from "../models/Agent";
 import jwt from "jsonwebtoken";
 import { ForbiddenError } from "apollo-server-express";
 
@@ -31,7 +31,10 @@ export const isAgent = async (req: Request) => {
     ) as {
       _id: string;
     };
-    const agent = await Agent.findById(token._id);
+    const agent = (await Agent.findById(token._id)) as AgentDoc | null;
+    if (!agent) {
+      throw new ForbiddenError("unauthorized");
+    }
     return agent;
   } catch (error) {
     throw new ForbiddenError("unauthorized");
