@@ -64,4 +64,32 @@ export const typeDefs = gql`
     profilePhoto: String
     isAgent: Boolean!
   }
+  type Property {
+    _id: ID!
+    reference: Int!
+    location: String!
+    streetAddress: String!
+    category: String!
+    price: Int!
+    bedrooms: Int!
+    bathrooms: Int!
+    type: String!
+    status: String!
+    agent: Agent!
+    heading: String!
+    description: String!
+    expiryDate: String!
+    images: [String!]!
+    parkingLots: Int
+    homeArea: Int
+    lotArea: Int
+    furnished: Boolean!
+    petFriendly: Boolean!
+    garden: Boolean!
+    serviceCharge: Int
+    repossessed: Boolean!
+    onAuction: Boolean!
+    auctionDate: String
+    auctionVenue: String
+  }
 `;

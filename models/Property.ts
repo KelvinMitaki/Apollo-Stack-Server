@@ -10,12 +10,11 @@ export interface PropertyAttrs {
   bathrooms: number;
   type: string;
   status: string;
-  agents: string[];
+  agent: mongoose.Types.ObjectId;
   heading: string;
   description: string;
   expiryDate: Date;
   images: string[];
-  garages?: number;
   parkingLots?: number;
   homeArea?: number;
   lotArea?: number;
@@ -38,12 +37,11 @@ export interface PropertyDoc extends mongoose.Document {
   bathrooms: number;
   type: string;
   status: string;
-  agents: string[];
+  agent: mongoose.Types.ObjectId;
   heading: string;
   description: string;
   expiryDate: Date;
   images: string[];
-  garages?: number;
   parkingLots?: number;
   homeArea?: number;
   lotArea?: number;
@@ -85,7 +83,7 @@ const PropertySchema = new mongoose.Schema(
     bathrooms: { type: Number, required: true },
     type: { type: String, required: true },
     status: { type: String, required: true },
-    agents: { type: mongoose.Types.ObjectId, ref: "Agent", required: true },
+    agent: { type: mongoose.Types.ObjectId, ref: "Agent", required: true },
     heading: { type: String, required: true },
     description: { type: String, required: true },
     expiryDate: {
@@ -95,9 +93,6 @@ const PropertySchema = new mongoose.Schema(
     images: {
       type: [String],
       required: true
-    },
-    garages: {
-      type: Number
     },
     parkingLots: {
       type: Number
