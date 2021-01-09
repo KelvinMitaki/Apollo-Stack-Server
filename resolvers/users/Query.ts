@@ -40,9 +40,7 @@ export const UserQueries = {
       }
       return user;
     } catch (error) {
-      throw new AuthenticationError(
-        `Invalid token ${JSON.stringify(split_token)}`
-      );
+      throw new AuthenticationError(error);
     }
   },
   users(prt: any, args: any, { User }: Context) {
