@@ -52,7 +52,7 @@ export const UserMutations = {
       throw new AuthenticationError("Invalid email or password");
     }
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
-      expiresIn: "1 day"
+      expiresIn: "7 days"
     });
     // req.session!.token = token;
     res.cookie("token", token, {

@@ -40,7 +40,7 @@ export const UserQueries = {
       }
       return user;
     } catch (error) {
-      throw new AuthenticationError(error);
+      return null;
     }
   },
   users(prt: any, args: any, { User }: Context) {
