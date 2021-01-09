@@ -47,7 +47,9 @@ export const UserQueries = {
     return User.find();
   },
   logoutUser(prt: any, args: any, { res }: Context) {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      ...(process.env.NODE_ENV !== "development" && { sameSite: "none" })
+    });
     return null;
   }
 };
