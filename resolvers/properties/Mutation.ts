@@ -14,7 +14,6 @@ export const PropertyMutations = {
     args.values.agent = agent._id;
     const property = Property.build(args.values);
     await property.save();
-
     return { ...property.toObject(), agent };
   }
 };

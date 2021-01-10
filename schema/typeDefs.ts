@@ -5,6 +5,7 @@ export const typeDefs = gql`
     currentUser: User
     users: [User!]!
     logoutUser: User
+    fetchProperties: [Property!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!

@@ -6,6 +6,7 @@ import { Agent } from "../models/Agent";
 import { AgentMutations } from "./agents/Mutation";
 import { PropertyMutations } from "./properties/Mutation";
 import { Property } from "../models/Property";
+import { PropertyQueries } from "./properties/Query";
 
 export interface Context {
   req: Request;
@@ -16,7 +17,8 @@ export interface Context {
 }
 export const resolvers = {
   Query: {
-    ...UserQueries
+    ...UserQueries,
+    ...PropertyQueries
   },
   Mutation: {
     ...UserMutations,

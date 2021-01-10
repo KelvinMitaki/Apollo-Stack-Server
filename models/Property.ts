@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { QueryOptions } from "mongoose";
 
 export interface PropertyAttrs {
   reference: number;
