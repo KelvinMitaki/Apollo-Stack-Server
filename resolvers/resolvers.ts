@@ -5,7 +5,7 @@ import { UserMutations } from "./users/Mutation";
 import { Agent } from "../models/Agent";
 import { AgentMutations } from "./agents/Mutation";
 import { PropertyMutations } from "./properties/Mutation";
-import { Property } from "../models/Property";
+import { Property, PropertyDoc } from "../models/Property";
 import { PropertyQueries } from "./properties/Query";
 
 export interface Context {
@@ -24,5 +24,13 @@ export const resolvers = {
     ...UserMutations,
     ...AgentMutations,
     ...PropertyMutations
+  },
+  Property: {
+    updatedAt(prt: PropertyDoc) {
+      return prt.updatedAt.toString();
+    },
+    createdAt(prt: PropertyDoc) {
+      return prt.createdAt.toString();
+    }
   }
 };

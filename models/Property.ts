@@ -53,6 +53,8 @@ export interface PropertyDoc extends mongoose.Document {
   onAuction?: boolean;
   auctionDate?: Date;
   auctionVenue?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PropertyModel extends mongoose.Model<PropertyDoc> {
