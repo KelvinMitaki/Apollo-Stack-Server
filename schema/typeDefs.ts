@@ -58,7 +58,6 @@ export const typeDefs = gql`
   type Agent {
     _id: ID!
     email: String!
-    password: String!
     firstName: String!
     lastName: String!
     phoneNumber: Int!
