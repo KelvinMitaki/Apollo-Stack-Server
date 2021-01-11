@@ -15,6 +15,7 @@ export const typeDefs = gql`
     editUserProfile(values: EditUserProfile!): User!
     editAgentProfile(values: EditAgentProfile!): Agent!
     addProperty(values: AddProperty!): Property!
+    editProperty(values: EditProperty!): Property!
   }
 
   input RegisterInput {
@@ -98,6 +99,33 @@ export const typeDefs = gql`
     updatedAt: String!
   }
   input AddProperty {
+    reference: Int!
+    location: String!
+    streetAddress: String!
+    category: String!
+    price: Int!
+    bedrooms: Int!
+    bathrooms: Int!
+    type: String!
+    status: String!
+    heading: String!
+    description: String!
+    expiryDate: String!
+    images: [String!]!
+    parkingLots: Int
+    plinthArea: Int
+    lotArea: Int
+    furnished: Boolean
+    petFriendly: Boolean
+    garden: Boolean
+    serviceCharge: Int
+    repossessed: Boolean
+    onAuction: Boolean
+    auctionDate: String
+    auctionVenue: String
+  }
+  input EditProperty {
+    _id: ID!
     reference: Int!
     location: String!
     streetAddress: String!
