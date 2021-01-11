@@ -7,7 +7,7 @@ import { AgentMutations } from "./agents/Mutation";
 import { PropertyMutations } from "./properties/Mutation";
 import { Property, PropertyDoc } from "../models/Property";
 import { PropertyQueries } from "./properties/Query";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 
 export interface Context {
   req: Request;
@@ -34,12 +34,12 @@ export const resolvers = {
       return prt.createdAt.toString();
     },
     auctionDate(prt: PropertyDoc) {
-      return prt.auctionDate
-        ? format(prt.auctionDate, "eeee Do MMMM, yyyy")
-        : null;
+      // format(prt.auctionDate, "EEE do MMMM, yyyy")
+      return prt.auctionDate ? prt.auctionDate.toString() : null;
     },
     expiryDate(prt: PropertyDoc) {
-      return format(prt.expiryDate, "eeee Do MMMM, yyyy");
+      // format(prt.expiryDate, "EEE do MMMM, yyyy");
+      return prt.expiryDate.toString();
     }
   }
 };
