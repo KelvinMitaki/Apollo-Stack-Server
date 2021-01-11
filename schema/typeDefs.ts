@@ -6,6 +6,7 @@ export const typeDefs = gql`
     users: [User!]!
     logoutUser: User
     fetchProperties: [Property!]!
+    fetchAgentProperty(propertyId: String!): Property
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!

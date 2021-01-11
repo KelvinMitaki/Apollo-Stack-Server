@@ -8,5 +8,13 @@ export const PropertyQueries = {
       "images",
       1
     );
+  },
+  async fetchAgentProperty(
+    prt: any,
+    args: { propertyId: string },
+    { req, Property }: Context
+  ) {
+    const agent = await isAgent(req);
+    return Property.findOne({ agent: agent._id, _id: args.propertyId });
   }
 };
