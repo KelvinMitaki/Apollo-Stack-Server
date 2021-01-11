@@ -13,7 +13,6 @@ export const UserQueries = {
     ) {
       return null;
     }
-    console.log("cookie", req.headers.cookie);
     const tokenArr = req.headers.cookie
       .split("; ")
       .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }));

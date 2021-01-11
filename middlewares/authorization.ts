@@ -13,14 +13,21 @@ export const isAgent = async (req: Request) => {
   ) {
     throw new ForbiddenError("unauthorized");
   }
-  const split_token = req.headers.cookie
+  const tokenArr = req.headers.cookie
     .split("; ")
-    .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }))
-    .find(
+    .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }));
+  let split_token;
+  split_token = tokenArr.find(
+    t =>
+      Object.values(t)[0].trim().length !== 0 &&
+      Object.keys(t)[0] === "client_token"
+  );
+  if (!split_token) {
+    split_token = tokenArr.find(
       t =>
-        Object.values(t)[0].trim().length !== 0 &&
-        (Object.keys(t)[0] === "token" || Object.keys(t)[0] === "client_token")
+        Object.values(t)[0].trim().length !== 0 && Object.keys(t)[0] === "token"
     );
+  }
   if (!split_token) {
     throw new ForbiddenError("unauthorized");
   }
