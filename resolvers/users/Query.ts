@@ -14,25 +14,28 @@ export const UserQueries = {
       return null;
     }
     console.log("cookie", req.headers.cookie);
-    let split_token;
-    split_token = req.headers.cookie
+    const tokenArr = req.headers.cookie
       .split("; ")
-      .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }))
-      .filter(
+      .map(t => ({ [t.split("=")[0]]: t.split("=")[1] }));
+    let split_token;
+    split_token = tokenArr.find(
+      t =>
+        Object.values(t)[0].trim().length !== 0 &&
+        Object.keys(t)[0] === "client_token"
+    );
+    if (!split_token) {
+      split_token = tokenArr.find(
         t =>
           Object.values(t)[0].trim().length !== 0 &&
-          (Object.keys(t)[0] === "token" ||
-            Object.keys(t)[0] === "client_token")
+          Object.keys(t)[0] === "token"
       );
-    if (!split_token || (split_token && split_token.length === 0)) {
-      return null;
     }
-    if (split_token.length > 1) {
-      // split_token=split_token.find(t=>)
+    if (!split_token) {
+      return null;
     }
     try {
       const token = jwt.verify(
-        Object.values(split_token[0])[0],
+        Object.values(split_token)[0],
         process.env.JWT_SECRET!
       ) as {
         _id: string;
