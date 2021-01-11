@@ -4,6 +4,7 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req, Agent }: Context) {
+    console.log(req.headers.cookie);
     if (
       !req.headers.cookie ||
       typeof req.headers.cookie === "undefined" ||
