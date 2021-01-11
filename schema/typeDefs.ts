@@ -126,19 +126,19 @@ export const typeDefs = gql`
   }
   input EditProperty {
     _id: ID!
-    reference: Int!
-    location: String!
-    streetAddress: String!
-    category: String!
-    price: Int!
-    bedrooms: Int!
-    bathrooms: Int!
-    type: String!
-    status: String!
-    heading: String!
-    description: String!
-    expiryDate: String!
-    images: [String!]!
+    reference: Int
+    location: String
+    streetAddress: String
+    category: String
+    price: Int
+    bedrooms: Int
+    bathrooms: Int
+    type: String
+    status: String
+    heading: String
+    description: String
+    expiryDate: String
+    images: [String!]
     parkingLots: Int
     plinthArea: Int
     lotArea: Int

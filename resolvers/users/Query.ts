@@ -51,9 +51,6 @@ export const UserQueries = {
       return null;
     }
   },
-  users(prt: any, args: any, { User }: Context) {
-    return User.find();
-  },
   logoutUser(prt: any, args: any, { res }: Context) {
     res.clearCookie("token", {
       ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
