@@ -31,6 +31,12 @@ export const resolvers = {
     },
     createdAt(prt: PropertyDoc) {
       return prt.createdAt.toString();
+    },
+    auctionDate(prt: PropertyDoc) {
+      return prt.auctionDate ? prt.auctionDate.toString() : null;
+    },
+    expiryDate(prt: PropertyDoc) {
+      return prt.expiryDate.toString();
     }
   }
 };
