@@ -1,6 +1,7 @@
 import mongoose, { QueryOptions } from "mongoose";
 
 export interface PropertyAttrs {
+  _id?: string;
   reference: number;
   location: string;
   streetAddress: string;

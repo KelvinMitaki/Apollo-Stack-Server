@@ -1,6 +1,7 @@
+import { ForbiddenError } from "apollo-server-express";
 import { isAgent } from "../../middlewares/authorization";
 import { AddPropertyValidation } from "../../middlewares/validation";
-import { PropertyAttrs } from "../../models/Property";
+import { PropertyAttrs, PropertyDoc } from "../../models/Property";
 import { Context } from "../resolvers";
 
 export const PropertyMutations = {
@@ -15,5 +16,26 @@ export const PropertyMutations = {
     const property = Property.build(args.values);
     await property.save();
     return { ...property.toObject(), agent };
+  },
+  async editProperty(
+    prt: any,
+    args: { values: PropertyAttrs },
+    { req, Property }: Context
+  ) {
+    const agent = await isAgent(req);
+    AddPropertyValidation(args.values);
+    const propertyToEdit: PropertyDoc = await Property.findOne({
+      _id: args.values._id,
+      agent: agent._id
+    });
+    if (!propertyToEdit) {
+      throw new ForbiddenError("not allowed");
+    }
+    for (const editedProp in args.values) {
+      // @ts-ignore
+      propertyToEdit[editedProp] = args.values[editedProp];
+    }
+    await propertyToEdit.save();
+    return propertyToEdit;
   }
 };
