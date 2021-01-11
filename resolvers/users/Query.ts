@@ -20,8 +20,8 @@ export const UserQueries = {
       .find(
         t =>
           Object.values(t)[0].trim().length !== 0 &&
-          (Object.keys(t)[0] === "token" ||
-            Object.keys(t)[0] === "client_token")
+          (Object.keys(t)[0] === "client_token" ||
+            Object.keys(t)[0] === "token")
       );
     console.log({ split_token });
     if (!split_token) {
