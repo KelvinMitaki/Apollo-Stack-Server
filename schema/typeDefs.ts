@@ -5,8 +5,8 @@ export const typeDefs = gql`
     currentUser: User
     users: [User!]!
     logoutUser: User
-    fetchProperties: [Property!]!
-    fetchAgentProperty(propertyId: String!): Property
+    fetchAgentProperties: [Property!]!
+    fetchAgentProperty(propertyId: ID!): Property
     filterProperties(filter: String!): [Property!]!
     fetchPropertyDetails(_id: ID!): Property
   }
