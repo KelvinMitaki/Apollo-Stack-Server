@@ -37,5 +37,8 @@ export const PropertyQueries = {
       return [];
     }
     return properties;
+  },
+  fetchPropertyDetails(prt: any, args: { id: string }, { Property }: Context) {
+    return Property.findById(args.id, null, { populate: "agent" });
   }
 };
