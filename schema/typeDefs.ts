@@ -7,6 +7,7 @@ export const typeDefs = gql`
     logoutUser: User
     fetchProperties: [Property!]!
     fetchAgentProperty(propertyId: String!): Property
+    filterProperties(filter: String!): [Property!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
@@ -126,15 +127,12 @@ export const typeDefs = gql`
   }
   input EditProperty {
     _id: ID!
-    reference: Int
     location: String
     streetAddress: String
     category: String
     price: Int
     bedrooms: Int
     bathrooms: Int
-    type: String
-    status: String
     heading: String
     description: String
     expiryDate: String

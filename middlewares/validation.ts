@@ -160,7 +160,7 @@ export const EditPropertyValidation = (args: PropertyAttrs) => {
     // @ts-ignore
     (expiryDate && new Date(expiryDate) == "Invalid Date") ||
     // @ts-ignore
-    isNaN(new Date(expiryDate))
+    (expiryDate && isNaN(new Date(expiryDate)))
   ) {
     throw new UserInputError("Enter a valid date");
   }

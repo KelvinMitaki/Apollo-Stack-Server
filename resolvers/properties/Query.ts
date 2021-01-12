@@ -16,5 +16,22 @@ export const PropertyQueries = {
   ) {
     const agent = await isAgent(req);
     return Property.findOne({ agent: agent._id, _id: args.propertyId });
+  },
+  async filterProperties(
+    prt: any,
+    args: { filter: "sale" | "rent" | "furnished" },
+    { Property }: Context
+  ) {
+    let properties;
+    if (args.filter === "sale" || args.filter === "rent") {
+      properties = await Property.find({ type: args.filter });
+    }
+    if (args.filter === "furnished") {
+      properties = await Property.find({ furnished: true });
+    }
+    if (!properties) {
+      return [];
+    }
+    return properties;
   }
 };

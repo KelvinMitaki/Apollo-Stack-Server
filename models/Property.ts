@@ -36,7 +36,7 @@ export interface PropertyDoc extends mongoose.Document {
   price: number;
   bedrooms: number;
   bathrooms: number;
-  type: string;
+  type: "sale" | "rent";
   status: string;
   agent: mongoose.Types.ObjectId;
   heading: string;
