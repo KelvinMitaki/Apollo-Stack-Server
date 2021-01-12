@@ -86,7 +86,7 @@ export const typeDefs = gql`
     expiryDate: String!
     images: [String!]!
     parkingLots: Int
-    homeArea: Int
+    plinthArea: Int
     lotArea: Int
     furnished: Boolean!
     petFriendly: Boolean!

@@ -24,10 +24,14 @@ export const PropertyQueries = {
   ) {
     let properties;
     if (args.filter === "sale" || args.filter === "rent") {
-      properties = await Property.find({ type: args.filter });
+      properties = await Property.find({ type: args.filter }, null, {
+        limit: 10
+      }).slice("images", 1);
     }
     if (args.filter === "furnished") {
-      properties = await Property.find({ furnished: true });
+      properties = await Property.find({ furnished: true }, null, {
+        limit: 10
+      }).slice("images", 1);
     }
     if (!properties) {
       return [];
