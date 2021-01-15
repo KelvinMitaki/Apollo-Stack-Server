@@ -7,11 +7,8 @@ export const typeDefs = gql`
     logoutUser: User
     fetchAgentProperties: [Property!]!
     fetchAgentProperty(propertyId: ID!): Property
-    filterProperties(
-      filter: String!
-      offset: Int!
-      limit: Int!
-    ): [FilterPropertiesReturn!]!
+    filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
+    filterPropertiesCount(filter: String!): Int!
     fetchPropertyDetails(_id: ID!): Property
   }
   type Mutation {
@@ -153,9 +150,5 @@ export const typeDefs = gql`
     onAuction: Boolean
     auctionDate: String
     auctionVenue: String
-  }
-  type FilterPropertiesReturn {
-    properties: [Property!]!
-    count: Int!
   }
 `;
