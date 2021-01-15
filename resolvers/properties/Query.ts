@@ -52,12 +52,12 @@ export const PropertyQueries = {
     { Property }: Context
   ) {
     if (args.filter === "rent" || args.filter === "sale") {
-      return Property.countDocuments({ type: args.filter });
+      return { count: Property.countDocuments({ type: args.filter }) };
     }
     if (args.filter === "furnished") {
-      return Property.countDocuments({ furnished: true });
+      return { count: Property.countDocuments({ furnished: true }) };
     }
-    return 0;
+    return { count: 0 };
   },
   fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
     return Property.findById(args._id, null, { populate: "agent" });

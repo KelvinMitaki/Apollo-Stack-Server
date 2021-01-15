@@ -8,7 +8,7 @@ export const typeDefs = gql`
     fetchAgentProperties: [Property!]!
     fetchAgentProperty(propertyId: ID!): Property
     filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
-    filterPropertiesCount(filter: String!): Int!
+    filterPropertiesCount(filter: String!): Count!
     fetchPropertyDetails(_id: ID!): Property
   }
   type Mutation {
@@ -150,5 +150,9 @@ export const typeDefs = gql`
     onAuction: Boolean
     auctionDate: String
     auctionVenue: String
+  }
+
+  type Count {
+    count: Int!
   }
 `;
