@@ -43,12 +43,14 @@ export const PropertyQueries = {
       count = await Property.countDocuments({ furnished: true });
     }
     if (!properties) {
-      return {
-        properties: [],
-        count: 0
-      };
+      return [
+        {
+          properties: [],
+          count: 0
+        }
+      ];
     }
-    return { properties, count };
+    return [{ properties, count }];
   },
   fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
     return Property.findById(args._id, null, { populate: "agent" });

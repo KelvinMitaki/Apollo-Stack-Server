@@ -11,7 +11,7 @@ export const typeDefs = gql`
       filter: String!
       offset: Int!
       limit: Int!
-    ): FilterPropertiesReturn!
+    ): [FilterPropertiesReturn!]!
     fetchPropertyDetails(_id: ID!): Property
   }
   type Mutation {
