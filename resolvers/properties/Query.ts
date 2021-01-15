@@ -27,22 +27,28 @@ export const PropertyQueries = {
     { Property }: Context
   ) {
     let properties;
+    let count;
     if (args.filter === "sale" || args.filter === "rent") {
       properties = await Property.find({ type: args.filter }, null, {
         limit: args.limit,
         skip: args.offset
       }).slice("images", 1);
+      count = await Property.countDocuments({ type: args.filter });
     }
     if (args.filter === "furnished") {
       properties = await Property.find({ furnished: true }, null, {
         limit: args.limit,
         skip: args.offset
       }).slice("images", 1);
+      count = await Property.countDocuments({ furnished: true });
     }
     if (!properties) {
-      return [];
+      return {
+        properties: [],
+        count: 0
+      };
     }
-    return properties;
+    return { properties, count };
   },
   fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
     return Property.findById(args._id, null, { populate: "agent" });
