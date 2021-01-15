@@ -7,7 +7,7 @@ export const typeDefs = gql`
     logoutUser: User
     fetchAgentProperties: [Property!]!
     fetchAgentProperty(propertyId: ID!): Property
-    filterProperties(filter: String!): [Property!]!
+    filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
     fetchPropertyDetails(_id: ID!): Property
   }
   type Mutation {

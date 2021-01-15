@@ -19,18 +19,24 @@ export const PropertyQueries = {
   },
   async filterProperties(
     prt: any,
-    args: { filter: "sale" | "rent" | "furnished" },
+    args: {
+      filter: "sale" | "rent" | "furnished";
+      offset: number;
+      limit: number;
+    },
     { Property }: Context
   ) {
     let properties;
     if (args.filter === "sale" || args.filter === "rent") {
       properties = await Property.find({ type: args.filter }, null, {
-        limit: 10
+        limit: args.limit,
+        skip: args.offset
       }).slice("images", 1);
     }
     if (args.filter === "furnished") {
       properties = await Property.find({ furnished: true }, null, {
-        limit: 10
+        limit: args.limit,
+        skip: args.offset
       }).slice("images", 1);
     }
     if (!properties) {
