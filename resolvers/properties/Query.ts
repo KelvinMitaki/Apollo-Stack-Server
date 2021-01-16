@@ -2,12 +2,16 @@ import { isAgent } from "../../middlewares/authorization";
 import { Context } from "../resolvers";
 
 export const PropertyQueries = {
-  async fetchAgentProperties(prt: any, args: any, { req, Property }: Context) {
+  async fetchAgentProperties(
+    prt: any,
+    args: { offset: number; limit: number },
+    { req, Property }: Context
+  ) {
     const agent = await isAgent(req);
-    return Property.find({ agent: agent._id }, null, { limit: 10 }).slice(
-      "images",
-      1
-    );
+    return Property.find({ agent: agent._id }, null, {
+      limit: args.limit,
+      skip: args.offset
+    }).slice("images", 1);
   },
   async fetchAgentProperty(
     prt: any,

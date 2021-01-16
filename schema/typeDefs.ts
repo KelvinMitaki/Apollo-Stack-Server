@@ -5,7 +5,7 @@ export const typeDefs = gql`
     currentUser: User
     users: [User!]!
     logoutUser: User
-    fetchAgentProperties: [Property!]!
+    fetchAgentProperties(offset: Int!, limit: Int!): [Property!]!
     fetchAgentProperty(propertyId: ID!): Property
     filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
     filterPropertiesCount(filter: String!): Count!
