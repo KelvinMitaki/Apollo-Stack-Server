@@ -9,6 +9,7 @@ export const typeDefs = gql`
     fetchAgentProperty(propertyId: ID!): Property
     filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
     filterPropertiesCount(filter: String!): Count!
+    agentPropertiesCount: Count!
     fetchPropertyDetails(_id: ID!): Property
   }
   type Mutation {

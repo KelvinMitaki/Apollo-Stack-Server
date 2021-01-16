@@ -61,5 +61,9 @@ export const PropertyQueries = {
   },
   fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
     return Property.findById(args._id, null, { populate: "agent" });
+  },
+  async agentPropertiesCount(prt: any, args: any, { Property, req }: Context) {
+    const agent = await isAgent(req);
+    return { count: Property.countDocuments({ agent: agent._id }) };
   }
 };
