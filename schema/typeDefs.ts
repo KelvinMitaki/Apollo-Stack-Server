@@ -60,6 +60,7 @@ export const typeDefs = gql`
     lastName: String!
     email: String!
     phoneNumber: Int
+    isAgent: Boolean
   }
   type Agent {
     _id: ID!
