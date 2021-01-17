@@ -182,6 +182,7 @@ export const EditProfileValidation = (args: AgentAttrs, isAgent: boolean) => {
   }
   if (
     (isAgent && !phoneNumber) ||
+    (phoneNumber && phoneNumber.toString().trim().length < 8) ||
     (phoneNumber && !validator.isNumeric(phoneNumber.toString()))
   ) {
     throw new UserInputError("enter a valid phone number");
