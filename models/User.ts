@@ -5,6 +5,7 @@ export interface UserAttrs {
   password: string;
   firstName: string;
   lastName: string;
+  phoneNumber?: number;
 }
 
 export interface UserDoc extends mongoose.Document {
@@ -12,6 +13,7 @@ export interface UserDoc extends mongoose.Document {
   password: string;
   firstName: string;
   lastName: string;
+  phoneNumber?: number;
 }
 
 export interface UserModel extends mongoose.Model<UserDoc> {

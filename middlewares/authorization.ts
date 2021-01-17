@@ -2,8 +2,9 @@ import { Request } from "express";
 import { Agent, AgentDoc } from "../models/Agent";
 import jwt from "jsonwebtoken";
 import { ForbiddenError } from "apollo-server-express";
+import { User, UserDoc } from "../models/User";
 
-export const isAgent = async (req: Request) => {
+export const isAuthorized = async (req: Request, usr: "user" | "agent") => {
   if (
     !req.headers.cookie ||
     typeof req.headers.cookie === "undefined" ||
@@ -38,11 +39,16 @@ export const isAgent = async (req: Request) => {
     ) as {
       _id: string;
     };
-    const agent = (await Agent.findById(token._id)) as AgentDoc | null;
-    if (!agent) {
+    let user;
+    if (usr === "agent") {
+      user = (await Agent.findById(token._id)) as AgentDoc | null;
+    } else {
+      user = await User.findById(token._id);
+    }
+    if (!user) {
       throw new ForbiddenError("unauthorized");
     }
-    return agent;
+    return user;
   } catch (error) {
     throw new ForbiddenError("unauthorized");
   }

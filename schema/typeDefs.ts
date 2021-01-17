@@ -16,7 +16,7 @@ export const typeDefs = gql`
     registerUser(values: RegisterInput!): User!
     registerAgent(values: RegisterAgentInput!): Agent!
     loginUser(email: String!, password: String!): Token!
-    editUserProfile(values: EditUserProfile!): User!
+    editProfile(values: EditUserProfile!): User!
     editAgentProfile(values: EditAgentProfile!): Agent!
     addProperty(values: AddProperty!): Property!
     editProperty(values: EditProperty!): Property!

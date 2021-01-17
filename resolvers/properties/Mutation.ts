@@ -1,5 +1,5 @@
 import { ForbiddenError } from "apollo-server-express";
-import { isAgent } from "../../middlewares/authorization";
+import { isAuthorized } from "../../middlewares/authorization";
 import {
   AddPropertyValidation,
   EditPropertyValidation
@@ -13,7 +13,7 @@ export const PropertyMutations = {
     args: { values: PropertyAttrs },
     { req, Property }: Context
   ) {
-    const agent = await isAgent(req);
+    const agent = await isAuthorized(req, "agent");
     AddPropertyValidation(args.values);
     args.values.agent = agent._id;
     const property = Property.build(args.values);
@@ -25,7 +25,7 @@ export const PropertyMutations = {
     args: { values: PropertyAttrs },
     { req, Property }: Context
   ) {
-    const agent = await isAgent(req);
+    const agent = await isAuthorized(req, "agent");
     EditPropertyValidation(args.values);
     const propertyToEdit: PropertyDoc = await Property.findOne({
       _id: args.values._id,

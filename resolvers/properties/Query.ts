@@ -1,4 +1,4 @@
-import { isAgent } from "../../middlewares/authorization";
+import { isAuthorized } from "../../middlewares/authorization";
 import { Context } from "../resolvers";
 
 export const PropertyQueries = {
@@ -7,7 +7,7 @@ export const PropertyQueries = {
     args: { offset: number; limit: number },
     { req, Property }: Context
   ) {
-    const agent = await isAgent(req);
+    const agent = await isAuthorized(req, "agent");
     return Property.find({ agent: agent._id }, null, {
       limit: args.limit,
       skip: args.offset
@@ -18,7 +18,7 @@ export const PropertyQueries = {
     args: { propertyId: string },
     { req, Property }: Context
   ) {
-    const agent = await isAgent(req);
+    const agent = await isAuthorized(req, "agent");
     return Property.findOne({ agent: agent._id, _id: args.propertyId });
   },
   async filterProperties(
@@ -67,7 +67,7 @@ export const PropertyQueries = {
     return Property.findById(args._id, null, { populate: "agent" });
   },
   async agentPropertiesCount(prt: any, args: any, { Property, req }: Context) {
-    const agent = await isAgent(req);
+    const agent = await isAuthorized(req, "agent");
     return { count: Property.countDocuments({ agent: agent._id }) };
   }
 };
