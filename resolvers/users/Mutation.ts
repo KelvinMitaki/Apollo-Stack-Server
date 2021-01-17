@@ -1,8 +1,16 @@
 import { AuthenticationError } from "apollo-server-express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { RegisterUserValidation } from "../../middlewares/validation";
-import { UserAttrs } from "../../models/User";
+import {
+  editProfileValidation,
+  isAuthorized
+} from "../../middlewares/authorization";
+import {
+  EditProfileValidation,
+  RegisterUserValidation
+} from "../../middlewares/validation";
+import { AgentAttrs, AgentDoc } from "../../models/Agent";
+import { UserAttrs, UserDoc } from "../../models/User";
 import { Context } from "../resolvers";
 
 export const UserMutations = {
@@ -62,5 +70,17 @@ export const UserMutations = {
       secure: process.env.NODE_ENV !== "development"
     });
     return { token };
+  },
+  async editProfile(prt: any, args: { values: AgentAttrs }, { req }: Context) {
+    const user = (await editProfileValidation(req)) as AgentDoc;
+    EditProfileValidation(args.values, user.isAgent ? true : false);
+    // @ts-ignore
+    delete args.values.email;
+    for (let prop in args.values) {
+      // @ts-ignore
+      user[prop] = args.values[prop];
+    }
+    await user.save();
+    return user;
   }
 };

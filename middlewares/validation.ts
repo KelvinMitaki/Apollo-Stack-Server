@@ -168,3 +168,22 @@ export const EditPropertyValidation = (args: PropertyAttrs) => {
     throw new UserInputError("Enter valid images");
   }
 };
+
+export const EditProfileValidation = (args: AgentAttrs, isAgent: boolean) => {
+  const { email, firstName, lastName, phoneNumber } = args;
+  if (!email || (email && !validator.isEmail(email))) {
+    throw new UserInputError("invalid email");
+  }
+  if (!firstName || (firstName && firstName.trim().length === 0)) {
+    throw new UserInputError("enter a valid first name");
+  }
+  if (!lastName || (lastName && lastName.trim().length === 0)) {
+    throw new UserInputError("enter a valid first name");
+  }
+  if (
+    (isAgent && !phoneNumber) ||
+    (phoneNumber && !validator.isNumeric(phoneNumber.toString()))
+  ) {
+    throw new UserInputError("enter a valid phone number");
+  }
+};
