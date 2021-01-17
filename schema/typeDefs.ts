@@ -151,6 +151,7 @@ export const typeDefs = gql`
     onAuction: Boolean
     auctionDate: String
     auctionVenue: String
+    status: String
   }
 
   type Count {
