@@ -51,7 +51,16 @@ export const PropertyQueries = {
   filterPropertiesCount(
     prt: any,
     args: {
-      filter: "sale" | "rent" | "furnished";
+      filter?: "sale" | "rent" | "furnished";
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+      };
     },
     { Property }: Context
   ) {
@@ -60,6 +69,50 @@ export const PropertyQueries = {
     }
     if (args.filter === "furnished") {
       return { count: Property.countDocuments({ furnished: true }) };
+    }
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms
+      } = args.values;
+      const search = {} as { [key: string]: any };
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = bedrooms;
+      }
+      if (bathrooms) {
+        search.bathrooms = bathrooms;
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location, streetAddress: location }
+        ];
+      }
+      return {
+        count: Property.countDocuments(search)
+      };
     }
     return { count: 0 };
   },
@@ -130,65 +183,5 @@ export const PropertyQueries = {
       skip: args.offset,
       limit: args.limit
     }).slice("images", 1);
-  },
-  searchPropertyCount(
-    prt: any,
-    args: {
-      values: {
-        type?: "sale" | "rent";
-        category?: string;
-        location?: string;
-        minPrice?: number;
-        maxPrice?: number;
-        bedrooms?: number;
-        bathrooms?: number;
-      };
-      offset: number;
-      limit: number;
-    },
-    { Property }: Context
-  ) {
-    const {
-      type,
-      category,
-      location,
-      minPrice,
-      maxPrice,
-      bedrooms,
-      bathrooms
-    } = args.values;
-    const search = {} as typeof args.values | { [key: string]: any };
-    if (type) {
-      search.type = type;
-    }
-    if (category) {
-      search.category = category;
-    }
-    if (minPrice) {
-      (search as { [key: string]: any }).price = {
-        ...(search as { [key: string]: any }).price,
-        $gte: minPrice
-      };
-    }
-    if (maxPrice) {
-      (search as { [key: string]: any }).price = {
-        ...(search as { [key: string]: any }).price,
-        $lte: maxPrice
-      };
-    }
-    if (bedrooms) {
-      search.bedrooms = bedrooms;
-    }
-    if (bathrooms) {
-      search.bathrooms = bathrooms;
-    }
-    if (location) {
-      (search as { [key: string]: any }).$or = [
-        { location, streetAddress: location }
-      ];
-    }
-    return {
-      count: Property.countDocuments(search)
-    };
   }
 };

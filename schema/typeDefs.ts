@@ -8,7 +8,7 @@ export const typeDefs = gql`
     fetchAgentProperties(offset: Int!, limit: Int!): [Property!]!
     fetchAgentProperty(propertyId: ID!): Property
     filterProperties(filter: String!, offset: Int!, limit: Int!): [Property!]!
-    filterPropertiesCount(filter: String!): Count!
+    filterPropertiesCount(filter: String, values: SearchProperty): Count!
     agentPropertiesCount: Count!
     fetchPropertyDetails(_id: ID!): Property
     searchProperty(
@@ -16,7 +16,6 @@ export const typeDefs = gql`
       offset: Int!
       limit: Int!
     ): [Property!]!
-    searchPropertyCount(values: SearchProperty): Count!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
