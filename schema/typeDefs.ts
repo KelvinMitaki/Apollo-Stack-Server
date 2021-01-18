@@ -11,6 +11,7 @@ export const typeDefs = gql`
     filterPropertiesCount(filter: String!): Count!
     agentPropertiesCount: Count!
     fetchPropertyDetails(_id: ID!): Property
+    searchProperty(values: SearchProperty): [Property!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
@@ -50,7 +51,15 @@ export const typeDefs = gql`
     phoneNumber: Int!
     address: String!
   }
-
+  input SearchProperty {
+    type: String
+    category: String
+    location: String
+    minPrice: Int
+    maxPrice: Int
+    bedrooms: Int
+    bathrooms: Int
+  }
   type Token {
     token: String!
   }
