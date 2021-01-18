@@ -100,10 +100,10 @@ export const PropertyQueries = {
         };
       }
       if (bedrooms) {
-        search.bedrooms = bedrooms;
+        search.bedrooms = { $gte: bedrooms };
       }
       if (bathrooms) {
-        search.bathrooms = bathrooms;
+        search.bathrooms = { $gte: bathrooms };
       }
       if (location) {
         (search as { [key: string]: any }).$or = [
@@ -169,10 +169,10 @@ export const PropertyQueries = {
       };
     }
     if (bedrooms) {
-      search.bedrooms = bedrooms;
+      search.bedrooms = { $gte: bedrooms };
     }
     if (bathrooms) {
-      search.bathrooms = bathrooms;
+      search.bathrooms = { $gte: bathrooms };
     }
     if (location) {
       (search as { [key: string]: any }).$or = [
