@@ -69,5 +69,61 @@ export const PropertyQueries = {
   async agentPropertiesCount(prt: any, args: any, { Property, req }: Context) {
     const agent = await isAuthorized(req, "agent");
     return { count: Property.countDocuments({ agent: agent._id }) };
+  },
+  searchProperty(
+    prt: any,
+    args: {
+      values: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+      };
+    },
+    { Property }: Context
+  ) {
+    const {
+      type,
+      category,
+      location,
+      minPrice,
+      maxPrice,
+      bedrooms,
+      bathrooms
+    } = args.values;
+    const search = {} as typeof args.values | { [key: string]: any };
+    if (type) {
+      search.type = type;
+    }
+    if (category) {
+      search.category = category;
+    }
+    if (minPrice) {
+      (search as { [key: string]: any }).price = {
+        ...(search as { [key: string]: any }).price,
+        $gte: minPrice
+      };
+    }
+    if (maxPrice) {
+      (search as { [key: string]: any }).price = {
+        ...(search as { [key: string]: any }).price,
+        $lte: maxPrice
+      };
+    }
+    if (bedrooms) {
+      search.bedrooms = bedrooms;
+    }
+    if (bathrooms) {
+      search.bathrooms = bathrooms;
+    }
+    if (location) {
+      (search as { [key: string]: any }).$or = [
+        { location, streetAddress: location }
+      ];
+    }
+    return Property.find(search);
   }
 };
