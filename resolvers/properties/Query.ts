@@ -1,4 +1,5 @@
 import { isAuthorized } from "../../middlewares/authorization";
+import { PropertyDoc } from "../../models/Property";
 import { Context } from "../resolvers";
 
 export const PropertyQueries = {
@@ -123,7 +124,7 @@ export const PropertyQueries = {
     const agent = await isAuthorized(req, "agent");
     return { count: Property.countDocuments({ agent: agent._id }) };
   },
-  searchProperties(
+  async searchProperties(
     prt: any,
     args: {
       values: {
@@ -150,6 +151,7 @@ export const PropertyQueries = {
       bathrooms
     } = args.values;
     const search = {} as typeof args.values | { [key: string]: any };
+
     if (type) {
       search.type = type;
     }
@@ -176,7 +178,8 @@ export const PropertyQueries = {
     }
     if (location) {
       (search as { [key: string]: any }).$or = [
-        { location, streetAddress: location }
+        { location },
+        { streetAddress: location }
       ];
     }
     return Property.find(search, null, {

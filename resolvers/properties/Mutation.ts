@@ -16,6 +16,14 @@ export const PropertyMutations = {
     const agent = await isAuthorized(req, "agent");
     AddPropertyValidation(args.values);
     args.values.agent = agent._id;
+    for (let prop in args.values) {
+      // @ts-ignore
+      typeof args.values[prop] === "string"
+        ? // @ts-ignore
+          (args.values[prop] as string).toLowerCase()
+        : // @ts-ignore
+          args.values[prop];
+    }
     const property = Property.build(args.values);
     await property.save();
     return { ...property.toObject(), agent };
@@ -36,7 +44,13 @@ export const PropertyMutations = {
     }
     for (const editedProp in args.values) {
       // @ts-ignore
-      propertyToEdit[editedProp] = args.values[editedProp];
+      propertyToEdit[editedProp] =
+        // @ts-ignore
+        typeof args.values[editedProp] === "string"
+          ? // @ts-ignore
+            (args.values[editedProp] as string).toLowerCase()
+          : // @ts-ignore
+            args.values[editedProp];
     }
     await propertyToEdit.save();
     return propertyToEdit;
