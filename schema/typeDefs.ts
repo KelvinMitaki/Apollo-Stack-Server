@@ -16,7 +16,7 @@ export const typeDefs = gql`
       offset: Int!
       limit: Int!
     ): [Property!]!
-    searchPropertyCount(values: SearchProperty): [Property!]!
+    searchPropertyCount(values: SearchProperty): Count!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
