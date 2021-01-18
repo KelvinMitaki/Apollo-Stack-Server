@@ -123,7 +123,7 @@ export const PropertyQueries = {
     const agent = await isAuthorized(req, "agent");
     return { count: Property.countDocuments({ agent: agent._id }) };
   },
-  searchProperty(
+  searchProperties(
     prt: any,
     args: {
       values: {

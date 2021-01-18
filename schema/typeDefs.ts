@@ -11,7 +11,7 @@ export const typeDefs = gql`
     filterPropertiesCount(filter: String, values: SearchProperty): Count!
     agentPropertiesCount: Count!
     fetchPropertyDetails(_id: ID!): Property
-    searchProperty(
+    searchProperties(
       values: SearchProperty
       offset: Int!
       limit: Int!
