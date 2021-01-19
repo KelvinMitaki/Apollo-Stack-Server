@@ -1,18 +1,81 @@
 import { isAuthorized } from "../../middlewares/authorization";
-import { PropertyDoc } from "../../models/Property";
+import { AgentDoc } from "../../models/Agent";
 import { Context } from "../resolvers";
 
 export const PropertyQueries = {
   async fetchAgentProperties(
     prt: any,
-    args: { offset: number; limit: number },
+    args: {
+      offset: number;
+      limit: number;
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+      };
+    },
     { req, Property }: Context
   ) {
-    const agent = await isAuthorized(req, "agent");
-    return Property.find({ agent: agent._id }, null, {
-      limit: args.limit,
-      skip: args.offset
-    }).slice("images", 1);
+    const agent: AgentDoc = await isAuthorized(req, "agent");
+    if (!args.values) {
+      return Property.find({ agent: agent._id }, null, {
+        limit: args.limit,
+        skip: args.offset
+      }).slice("images", 1);
+    }
+
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms
+      } = args.values;
+      const search = {} as { [key: string]: any };
+
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = { $gte: bedrooms };
+      }
+      if (bathrooms) {
+        search.bathrooms = { $gte: bathrooms };
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location },
+          { streetAddress: location }
+        ];
+      }
+      return Property.find({ ...search, agent: agent._id }, null, {
+        skip: args.offset,
+        limit: args.limit
+      }).slice("images", 1);
+    }
+    return [];
   },
   async fetchAgentProperty(
     prt: any,
