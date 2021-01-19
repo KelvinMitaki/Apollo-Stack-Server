@@ -25,29 +25,81 @@ export const PropertyQueries = {
   async filterProperties(
     prt: any,
     args: {
-      filter: "sale" | "rent" | "furnished";
+      filter?: "sale" | "rent" | "furnished";
       offset: number;
       limit: number;
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+      };
     },
     { Property }: Context
   ) {
-    let properties;
     if (args.filter === "sale" || args.filter === "rent") {
-      properties = await Property.find({ type: args.filter }, null, {
+      return Property.find({ type: args.filter }, null, {
         limit: args.limit,
         skip: args.offset
       }).slice("images", 1);
     }
     if (args.filter === "furnished") {
-      properties = await Property.find({ furnished: true }, null, {
+      return Property.find({ furnished: true }, null, {
         limit: args.limit,
         skip: args.offset
       }).slice("images", 1);
     }
-    if (!properties) {
-      return [];
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms
+      } = args.values;
+      const search = {} as { [key: string]: any };
+
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = { $gte: bedrooms };
+      }
+      if (bathrooms) {
+        search.bathrooms = { $gte: bathrooms };
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location },
+          { streetAddress: location }
+        ];
+      }
+      return Property.find(search, null, {
+        skip: args.offset,
+        limit: args.limit
+      }).slice("images", 1);
     }
-    return properties;
+    return [];
   },
   filterPropertiesCount(
     prt: any,
