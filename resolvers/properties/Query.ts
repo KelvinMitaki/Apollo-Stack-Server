@@ -40,17 +40,19 @@ export const PropertyQueries = {
     },
     { Property }: Context
   ) {
-    if (args.filter === "sale" || args.filter === "rent") {
-      return Property.find({ type: args.filter }, null, {
-        limit: args.limit,
-        skip: args.offset
-      }).slice("images", 1);
-    }
-    if (args.filter === "furnished") {
-      return Property.find({ furnished: true }, null, {
-        limit: args.limit,
-        skip: args.offset
-      }).slice("images", 1);
+    if (!args.values) {
+      if (args.filter === "sale" || args.filter === "rent") {
+        return Property.find({ type: args.filter }, null, {
+          limit: args.limit,
+          skip: args.offset
+        }).slice("images", 1);
+      }
+      if (args.filter === "furnished") {
+        return Property.find({ furnished: true }, null, {
+          limit: args.limit,
+          skip: args.offset
+        }).slice("images", 1);
+      }
     }
     if (args.values) {
       const {
@@ -117,11 +119,13 @@ export const PropertyQueries = {
     },
     { Property }: Context
   ) {
-    if (args.filter === "rent" || args.filter === "sale") {
-      return { count: Property.countDocuments({ type: args.filter }) };
-    }
-    if (args.filter === "furnished") {
-      return { count: Property.countDocuments({ furnished: true }) };
+    if (!args.values) {
+      if (args.filter === "rent" || args.filter === "sale") {
+        return { count: Property.countDocuments({ type: args.filter }) };
+      }
+      if (args.filter === "furnished") {
+        return { count: Property.countDocuments({ furnished: true }) };
+      }
     }
     if (args.values) {
       const {
