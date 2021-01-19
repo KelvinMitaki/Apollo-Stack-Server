@@ -239,9 +239,73 @@ export const PropertyQueries = {
   fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
     return Property.findById(args._id, null, { populate: "agent" });
   },
-  async agentPropertiesCount(prt: any, args: any, { Property, req }: Context) {
+  async agentPropertiesCount(
+    prt: any,
+    args: {
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+      };
+    },
+    { Property, req }: Context
+  ) {
     const agent = await isAuthorized(req, "agent");
-    return { count: Property.countDocuments({ agent: agent._id }) };
+    if (!args.values) {
+      return { count: Property.countDocuments({ agent: agent._id }) };
+    }
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms
+      } = args.values;
+      const search = {} as { [key: string]: any };
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = { $gte: bedrooms };
+      }
+      if (bathrooms) {
+        search.bathrooms = { $gte: bathrooms };
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location, streetAddress: location }
+        ];
+      }
+      return {
+        count: Property.countDocuments(search)
+      };
+    }
+
+    return {
+      count: 0
+    };
   },
   async searchProperties(
     prt: any,
