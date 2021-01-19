@@ -72,6 +72,7 @@ export const typeDefs = gql`
     maxPrice: Int
     bedrooms: Int
     bathrooms: Int
+    furnished: Boolean
   }
   type Token {
     token: String!

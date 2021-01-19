@@ -16,6 +16,7 @@ export const PropertyQueries = {
         maxPrice?: number;
         bedrooms?: number;
         bathrooms?: number;
+        furnished?: boolean;
       };
     },
     { req, Property }: Context
@@ -27,7 +28,6 @@ export const PropertyQueries = {
         skip: args.offset
       }).slice("images", 1);
     }
-
     if (args.values) {
       const {
         type,
@@ -36,7 +36,8 @@ export const PropertyQueries = {
         minPrice,
         maxPrice,
         bedrooms,
-        bathrooms
+        bathrooms,
+        furnished
       } = args.values;
       const search = {} as { [key: string]: any };
 
@@ -69,6 +70,9 @@ export const PropertyQueries = {
           { location },
           { streetAddress: location }
         ];
+      }
+      if (typeof furnished === "boolean") {
+        search.furnished = furnished;
       }
       return Property.find({ ...search, agent: agent._id }, null, {
         skip: args.offset,
@@ -99,6 +103,7 @@ export const PropertyQueries = {
         maxPrice?: number;
         bedrooms?: number;
         bathrooms?: number;
+        furnished?: boolean;
       };
     },
     { Property }: Context
@@ -125,7 +130,8 @@ export const PropertyQueries = {
         minPrice,
         maxPrice,
         bedrooms,
-        bathrooms
+        bathrooms,
+        furnished
       } = args.values;
       const search = {} as { [key: string]: any };
 
@@ -159,6 +165,9 @@ export const PropertyQueries = {
           { streetAddress: location }
         ];
       }
+      if (typeof furnished === "boolean") {
+        search.furnished = furnished;
+      }
       return Property.find(search, null, {
         skip: args.offset,
         limit: args.limit
@@ -178,6 +187,7 @@ export const PropertyQueries = {
         maxPrice?: number;
         bedrooms?: number;
         bathrooms?: number;
+        furnished?: boolean;
       };
     },
     { Property }: Context
@@ -198,7 +208,8 @@ export const PropertyQueries = {
         minPrice,
         maxPrice,
         bedrooms,
-        bathrooms
+        bathrooms,
+        furnished
       } = args.values;
       const search = {} as { [key: string]: any };
       if (type) {
@@ -229,6 +240,9 @@ export const PropertyQueries = {
         (search as { [key: string]: any }).$or = [
           { location, streetAddress: location }
         ];
+      }
+      if (typeof furnished === "boolean") {
+        search.furnished = furnished;
       }
       return {
         count: Property.countDocuments(search)
@@ -250,6 +264,7 @@ export const PropertyQueries = {
         maxPrice?: number;
         bedrooms?: number;
         bathrooms?: number;
+        furnished?: boolean;
       };
     },
     { Property, req }: Context
@@ -266,7 +281,8 @@ export const PropertyQueries = {
         minPrice,
         maxPrice,
         bedrooms,
-        bathrooms
+        bathrooms,
+        furnished
       } = args.values;
       const search = {} as { [key: string]: any };
       if (type) {
@@ -298,6 +314,9 @@ export const PropertyQueries = {
           { location, streetAddress: location }
         ];
       }
+      if (typeof furnished === "boolean") {
+        search.furnished = furnished;
+      }
       return {
         count: Property.countDocuments(search)
       };
@@ -318,6 +337,7 @@ export const PropertyQueries = {
         maxPrice?: number;
         bedrooms?: number;
         bathrooms?: number;
+        furnished?: boolean;
       };
       offset: number;
       limit: number;
@@ -331,7 +351,8 @@ export const PropertyQueries = {
       minPrice,
       maxPrice,
       bedrooms,
-      bathrooms
+      bathrooms,
+      furnished
     } = args.values;
     const search = {} as typeof args.values | { [key: string]: any };
 
@@ -364,6 +385,9 @@ export const PropertyQueries = {
         { location },
         { streetAddress: location }
       ];
+    }
+    if (furnished) {
+      search.furnished = true;
     }
     return Property.find(search, null, {
       skip: args.offset,
