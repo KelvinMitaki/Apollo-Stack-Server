@@ -20,7 +20,7 @@ export const PropertyMutations = {
       // @ts-ignore
       typeof args.values[prop] === "string"
         ? // @ts-ignore
-          (args.values[prop] as string).toLowerCase()
+          (args.values[prop] as string).trim().toLowerCase()
         : // @ts-ignore
           args.values[prop];
     }
@@ -48,7 +48,7 @@ export const PropertyMutations = {
         // @ts-ignore
         typeof args.values[editedProp] === "string"
           ? // @ts-ignore
-            (args.values[editedProp] as string).toLowerCase()
+            (args.values[editedProp] as string).trim().toLowerCase()
           : // @ts-ignore
             args.values[editedProp];
     }
