@@ -10,7 +10,14 @@ export interface PropertyAttrs {
   bedrooms: number;
   bathrooms: number;
   type: string;
-  status: string;
+  status:
+    | "sold"
+    | "pending"
+    | "expired"
+    | "rented"
+    | "active"
+    | "withdrawn"
+    | "cancelled";
   agent: mongoose.Types.ObjectId;
   heading: string;
   description: string;
@@ -27,6 +34,7 @@ export interface PropertyAttrs {
   onAuction?: boolean;
   auctionDate?: Date;
   auctionVenue?: string;
+  withdrawn?: boolean;
 }
 export interface PropertyDoc extends mongoose.Document {
   reference: number;
@@ -37,7 +45,14 @@ export interface PropertyDoc extends mongoose.Document {
   bedrooms: number;
   bathrooms: number;
   type: "sale" | "rent";
-  status: string;
+  status:
+    | "sold"
+    | "pending"
+    | "expired"
+    | "rented"
+    | "active"
+    | "withdrawn"
+    | "cancelled";
   agent: mongoose.Types.ObjectId;
   heading: string;
   description: string;
@@ -54,6 +69,7 @@ export interface PropertyDoc extends mongoose.Document {
   onAuction?: boolean;
   auctionDate?: Date;
   auctionVenue?: string;
+  withdrawn?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -134,6 +150,10 @@ const PropertySchema = new mongoose.Schema(
     },
     auctionVenue: {
       type: String
+    },
+    withdrawn: {
+      type: Boolean,
+      default: false
     }
   },
   {

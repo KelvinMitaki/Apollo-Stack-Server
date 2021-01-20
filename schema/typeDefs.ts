@@ -40,6 +40,12 @@ export const typeDefs = gql`
     editAgentProfile(values: EditAgentProfile!): Agent!
     addProperty(values: AddProperty!): Property!
     editProperty(values: EditProperty!): Property!
+    updateExpiredListings(
+      values: [ExpiredListingsID!]!
+      expiryDate: Boolean
+      mark: Boolean
+      withdraw: Boolean
+    ): [Property]
   }
 
   input RegisterInput {
@@ -79,6 +85,10 @@ export const typeDefs = gql`
     bedrooms: Int
     bathrooms: Int
     furnished: Boolean
+  }
+  input ExpiredListingsID {
+    _id: ID!
+    type: String!
   }
   type Token {
     token: String!
