@@ -393,5 +393,87 @@ export const PropertyQueries = {
       skip: args.offset,
       limit: args.limit
     }).slice("images", 1);
+  },
+  async fetchExpiredListings(
+    prt: any,
+    args: {
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+        furnished?: boolean;
+      };
+      offset: number;
+      limit: number;
+    },
+    { Property, req }: Context
+  ) {
+    const agent: AgentDoc = await isAuthorized(req, "agent");
+    if (!args.values) {
+      return Property.find(
+        { agent: agent._id, expiryDate: { $lt: new Date() } },
+        null,
+        { skip: args.offset, limit: args.limit }
+      ).slice("images", 1);
+    }
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms,
+        furnished
+      } = args.values;
+      const search = {} as { [key: string]: any };
+
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = { $gte: bedrooms };
+      }
+      if (bathrooms) {
+        search.bathrooms = { $gte: bathrooms };
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location },
+          { streetAddress: location }
+        ];
+      }
+      if (furnished) {
+        search.furnished = true;
+      }
+      return Property.find(
+        { ...search, agent: agent._id, expiryDate: { $lt: new Date() } },
+        null,
+        {
+          skip: args.offset,
+          limit: args.limit
+        }
+      ).slice("images", 1);
+    }
   }
 };

@@ -25,6 +25,11 @@ export const typeDefs = gql`
       offset: Int!
       limit: Int!
     ): [Property!]!
+    fetchExpiredListings(
+      offset: Int!
+      limit: Int!
+      values: SearchProperty
+    ): [Property!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
