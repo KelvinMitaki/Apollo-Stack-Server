@@ -30,6 +30,7 @@ export const typeDefs = gql`
       limit: Int!
       values: SearchProperty
     ): [Property!]!
+    expiredListingsCount(values: SearchProperty): Count!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!

@@ -475,5 +475,86 @@ export const PropertyQueries = {
         }
       ).slice("images", 1);
     }
+  },
+  async expiredListingsCount(
+    prt: any,
+    args: {
+      values?: {
+        type?: "sale" | "rent";
+        category?: string;
+        location?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+        furnished?: boolean;
+      };
+    },
+    { Property, req }: Context
+  ) {
+    const agent = await isAuthorized(req, "agent");
+    if (!args.values) {
+      return {
+        count: Property.countDocuments({
+          agent: agent._id,
+          expiryDate: { $lt: new Date() }
+        })
+      };
+    }
+    if (args.values) {
+      const {
+        type,
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        bedrooms,
+        bathrooms,
+        furnished
+      } = args.values;
+      const search = {} as { [key: string]: any };
+      if (type) {
+        search.type = type;
+      }
+      if (category) {
+        search.category = category;
+      }
+      if (minPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $gte: minPrice
+        };
+      }
+      if (maxPrice) {
+        (search as { [key: string]: any }).price = {
+          ...(search as { [key: string]: any }).price,
+          $lte: maxPrice
+        };
+      }
+      if (bedrooms) {
+        search.bedrooms = { $gte: bedrooms };
+      }
+      if (bathrooms) {
+        search.bathrooms = { $gte: bathrooms };
+      }
+      if (location) {
+        (search as { [key: string]: any }).$or = [
+          { location, streetAddress: location }
+        ];
+      }
+      if (typeof furnished === "boolean") {
+        search.furnished = furnished;
+      }
+      return {
+        count: Property.countDocuments({
+          ...search,
+          expiryDate: { $lt: new Date() }
+        })
+      };
+    }
+
+    return {
+      count: 0
+    };
   }
 };
