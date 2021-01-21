@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { CreateLeadValidation } from "../../middlewares/validation";
 import { Context } from "../resolvers";
 
 export const LeadMutations = {
@@ -15,6 +16,8 @@ export const LeadMutations = {
     },
     { Lead }: Context
   ) {
+    CreateLeadValidation(args.values);
+    args.values.email = args.values.email.trim().toLowerCase();
     const lead = Lead.build(args.values);
     await lead.save();
     return lead;

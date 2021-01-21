@@ -3,6 +3,7 @@ import validator from "validator";
 import { UserInputError } from "apollo-server-express";
 import { AgentAttrs } from "../models/Agent";
 import { PropertyAttrs } from "../models/Property";
+import { LeadAttrs } from "../models/Lead";
 
 export const RegisterUserValidation = (args: UserAttrs) => {
   const { email, password, firstName, lastName } = args;
@@ -186,5 +187,32 @@ export const EditProfileValidation = (args: AgentAttrs, isAgent: boolean) => {
     (phoneNumber && !validator.isNumeric(phoneNumber.toString()))
   ) {
     throw new UserInputError("enter a valid phone number");
+  }
+};
+
+export const CreateLeadValidation = (args: LeadAttrs) => {
+  const { email, property, message, phoneNumber, fullName } = args;
+  if (!email || (email && !validator.isEmail(email))) {
+    throw new UserInputError("invalid email");
+  }
+
+  if (
+    !property ||
+    (property && ((property as unknown) as string).trim().length === 0)
+  ) {
+    throw new UserInputError("Invalid property id");
+  }
+  if (!message || (message && message.trim().length === 0)) {
+    throw new UserInputError("enter a valid message");
+  }
+  if (
+    !phoneNumber ||
+    (phoneNumber && !validator.isNumeric(phoneNumber.toString())) ||
+    (phoneNumber && phoneNumber.toString().length < 8)
+  ) {
+    throw new UserInputError("invalid phone number");
+  }
+  if (!fullName || (fullName && fullName.trim().length === 0)) {
+    throw new UserInputError("Invalid name");
   }
 };
