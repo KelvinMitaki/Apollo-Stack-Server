@@ -7,6 +7,8 @@ import { AgentMutations } from "./agents/Mutation";
 import { PropertyMutations } from "./properties/Mutation";
 import { Property, PropertyDoc } from "../models/Property";
 import { PropertyQueries } from "./properties/Query";
+import { LeadMutations } from "./leads/Mutation";
+import { LeadQueries } from "./leads/Query";
 // import { format } from "date-fns";
 
 export interface Context {
@@ -19,12 +21,14 @@ export interface Context {
 export const resolvers = {
   Query: {
     ...UserQueries,
-    ...PropertyQueries
+    ...PropertyQueries,
+    ...LeadQueries
   },
   Mutation: {
     ...UserMutations,
     ...AgentMutations,
-    ...PropertyMutations
+    ...PropertyMutations,
+    ...LeadMutations
   },
   Property: {
     updatedAt(prt: PropertyDoc) {
@@ -34,11 +38,9 @@ export const resolvers = {
       return prt.createdAt.toString();
     },
     auctionDate(prt: PropertyDoc) {
-      // format(prt.auctionDate, "EEE do MMMM, yyyy")
       return prt.auctionDate ? prt.auctionDate.toString() : null;
     },
     expiryDate(prt: PropertyDoc) {
-      // format(prt.expiryDate, "EEE do MMMM, yyyy");
       return prt.expiryDate.toString();
     }
   }
