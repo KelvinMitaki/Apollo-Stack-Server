@@ -46,6 +46,7 @@ export const typeDefs = gql`
       mark: Boolean
       withdraw: Boolean
     ): [Property]
+    createLead(values: CreateLead!): Lead!
   }
 
   input RegisterInput {
@@ -141,6 +142,22 @@ export const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
   }
+  type Lead {
+    _id: ID!
+    email: String!
+    fullName: String!
+    phoneNumber: Int!
+    message: String!
+    property: Property!
+    createdAt: String!
+  }
+  input CreateLead {
+    email: String!
+    fullName: String!
+    phoneNumber: Int!
+    message: String!
+    property: String!
+  }
   input AddProperty {
     reference: Int!
     location: String!
@@ -192,7 +209,6 @@ export const typeDefs = gql`
     auctionVenue: String
     status: String
   }
-
   type Count {
     count: Int!
   }

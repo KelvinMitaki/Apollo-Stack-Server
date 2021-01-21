@@ -9,6 +9,7 @@ import { Property, PropertyDoc } from "../models/Property";
 import { PropertyQueries } from "./properties/Query";
 import { LeadMutations } from "./leads/Mutation";
 import { LeadQueries } from "./leads/Query";
+import { LeadDoc } from "../models/Lead";
 // import { format } from "date-fns";
 
 export interface Context {
@@ -42,6 +43,11 @@ export const resolvers = {
     },
     expiryDate(prt: PropertyDoc) {
       return prt.expiryDate.toString();
+    }
+  },
+  Lead: {
+    createdAt(prt: LeadDoc) {
+      return prt.createdAt.toString();
     }
   }
 };
