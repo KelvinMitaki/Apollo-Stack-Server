@@ -191,7 +191,7 @@ export const EditProfileValidation = (args: AgentAttrs, isAgent: boolean) => {
 };
 
 export const CreateLeadValidation = (args: LeadAttrs) => {
-  const { email, property, message, phoneNumber, fullName } = args;
+  const { email, property, message, phoneNumber, fullName, agent } = args;
   if (!email || (email && !validator.isEmail(email))) {
     throw new UserInputError("invalid email");
   }
@@ -201,6 +201,9 @@ export const CreateLeadValidation = (args: LeadAttrs) => {
     (property && ((property as unknown) as string).trim().length === 0)
   ) {
     throw new UserInputError("Invalid property id");
+  }
+  if (!agent || (agent && ((agent as unknown) as string).trim().length === 0)) {
+    throw new UserInputError("Invalid agent id");
   }
   if (!message || (message && message.trim().length === 0)) {
     throw new UserInputError("enter a valid message");

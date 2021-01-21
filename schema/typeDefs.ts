@@ -31,6 +31,7 @@ export const typeDefs = gql`
       values: SearchProperty
     ): [Property!]!
     expiredListingsCount(values: SearchProperty): Count!
+    fetchLeads(offset: Int!, limit: Int!): [Lead!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
@@ -157,6 +158,7 @@ export const typeDefs = gql`
     phoneNumber: Int!
     message: String!
     property: String!
+    agent: String!
   }
   input AddProperty {
     reference: Int!

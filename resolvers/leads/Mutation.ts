@@ -12,6 +12,7 @@ export const LeadMutations = {
         phoneNumber: number;
         message: string;
         property: mongoose.Types.ObjectId;
+        agent: mongoose.Types.ObjectId;
       };
     },
     { Lead }: Context
