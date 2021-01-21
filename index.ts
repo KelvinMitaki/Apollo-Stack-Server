@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Agent } from "./models/Agent";
 import { Property } from "./models/Property";
+import { Lead } from "./models/Lead";
 
 const app = express();
 app.set("trust proxy", "1");
@@ -30,6 +31,7 @@ const server = new ApolloServer({
       User,
       Agent,
       Property,
+      Lead,
       res
     };
   }
