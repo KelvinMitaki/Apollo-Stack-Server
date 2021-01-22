@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
 export interface VisitorAttrs {
+  month: string;
   property: mongoose.Types.ObjectId;
 }
 
 export interface VisitorDoc extends mongoose.Document {
+  month: string;
   property: mongoose.Types.ObjectId;
   createdAt: Date;
 }

@@ -33,6 +33,7 @@ export const typeDefs = gql`
     expiredListingsCount(values: SearchProperty): Count!
     fetchLeads(offset: Int!, limit: Int!): [Lead!]!
     fetchLeadsCount: Count!
+    countViews(propertyId: ID!): [CountViews!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
@@ -214,6 +215,10 @@ export const typeDefs = gql`
     status: String
   }
   type Count {
+    count: Int!
+  }
+  type CountViews {
+    month: String!
     count: Int!
   }
 `;

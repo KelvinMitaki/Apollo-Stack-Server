@@ -4,6 +4,21 @@ import { AgentDoc } from "../../models/Agent";
 import { PropertyDoc } from "../../models/Property";
 import { Context } from "../resolvers";
 
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+
 export const PropertyQueries = {
   async fetchAgentProperties(
     prt: any,
@@ -258,7 +273,10 @@ export const PropertyQueries = {
     { Property, req, Visitor, res }: Context
   ) {
     if (!req.cookies["visitor"] && !req.cookies["client_visitor"]) {
-      const visitor = Visitor.build({ property: args._id });
+      const visitor = Visitor.build({
+        property: args._id,
+        month: months[new Date().getMonth()]
+      });
       await visitor.save();
       res.cookie("visitor", visitor._id, {
         httpOnly: true,

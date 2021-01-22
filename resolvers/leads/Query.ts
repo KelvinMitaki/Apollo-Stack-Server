@@ -1,7 +1,14 @@
+import mongoose from "mongoose";
 import { isAuthorized } from "../../middlewares/authorization";
 import { AgentDoc } from "../../models/Agent";
 import { Context } from "../resolvers";
 
+const daysInMonth = (month: number) => {
+  const d = new Date();
+  d.setMonth(d.getMonth() - month);
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+};
+// console.log(daysInMonth(0));
 export const LeadQueries = {
   async fetchLeads(
     prt: any,
@@ -19,5 +26,22 @@ export const LeadQueries = {
     return {
       count: Lead.countDocuments({ agent: agent._id })
     };
+  },
+  async countViews(
+    prt: any,
+    args: { propertyId: string },
+    { Visitor }: Context
+  ) {
+    const views = await Visitor.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6)
+          }
+        }
+      }
+    ]);
+    console.log(views);
+    return [{ month: "Jan", count: 3 }];
   }
 };
