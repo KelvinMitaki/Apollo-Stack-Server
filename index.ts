@@ -10,6 +10,7 @@ import { Agent } from "./models/Agent";
 import { Property } from "./models/Property";
 import { Lead } from "./models/Lead";
 import cookieParser from "cookie-parser";
+import { Visitor } from "./models/Visitor";
 
 const app = express();
 app.set("trust proxy", "1");
@@ -32,6 +33,7 @@ const server = new ApolloServer({
       User,
       Agent,
       Property,
+      Visitor,
       Lead,
       res
     };

@@ -143,6 +143,7 @@ export const typeDefs = gql`
     auctionVenue: String
     createdAt: String!
     updatedAt: String!
+    visitor: String
   }
   type Lead {
     _id: ID!

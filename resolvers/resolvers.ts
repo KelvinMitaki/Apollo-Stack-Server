@@ -10,6 +10,7 @@ import { PropertyQueries } from "./properties/Query";
 import { LeadMutations } from "./leads/Mutation";
 import { LeadQueries } from "./leads/Query";
 import { Lead, LeadDoc } from "../models/Lead";
+import { Visitor } from "../models/Visitor";
 // import { format } from "date-fns";
 
 export interface Context {
@@ -19,6 +20,7 @@ export interface Context {
   Agent: typeof Agent;
   Property: typeof Property;
   Lead: typeof Lead;
+  Visitor: typeof Visitor;
 }
 export const resolvers = {
   Query: {
