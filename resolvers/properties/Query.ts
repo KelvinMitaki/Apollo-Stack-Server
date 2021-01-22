@@ -255,7 +255,6 @@ export const PropertyQueries = {
     args: { _id: string },
     { Property, req }: Context
   ) {
-    console.log(req.headers.cookie);
     console.log(req.cookies);
     return Property.findById(args._id, null, { populate: "agent" });
   },

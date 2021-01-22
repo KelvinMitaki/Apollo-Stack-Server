@@ -1,4 +1,3 @@
-import { AuthenticationError } from "apollo-server-express";
 import jwt from "jsonwebtoken";
 import { Context } from "../resolvers";
 
