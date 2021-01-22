@@ -60,7 +60,7 @@ export const editProfileValidation = async (req: Request) => {
   let split_token;
   split_token = req.cookies["client_token"];
   if (!split_token) {
-    return (split_token = req.cookies["token"]);
+    split_token = req.cookies["token"];
   }
   if (!split_token) {
     throw new ForbiddenError("unauthorized");
