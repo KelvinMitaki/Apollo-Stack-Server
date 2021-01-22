@@ -257,19 +257,19 @@ export const PropertyQueries = {
     args: { _id: mongoose.Types.ObjectId },
     { Property, req, Visitor, res }: Context
   ) {
-    if (!req.cookies["visitor"]) {
+    if (!req.cookies["visitor"] && !req.cookies["client_visitor"]) {
       const visitor = Visitor.build({ property: args._id });
       await visitor.save();
       res.cookie("visitor", visitor._id, {
         httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 + 5000),
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5000),
         ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
         secure: process.env.NODE_ENV !== "development"
       });
       const property: PropertyDoc = await Property.findById(args._id, null, {
         populate: "agent"
       });
-      return { ...property.toObject(), visitor };
+      return { ...property.toObject(), visitor: visitor._id };
     }
     return Property.findById(args._id, null, { populate: "agent" });
   },
