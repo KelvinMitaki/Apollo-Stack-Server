@@ -250,7 +250,13 @@ export const PropertyQueries = {
     }
     return { count: 0 };
   },
-  fetchPropertyDetails(prt: any, args: { _id: string }, { Property }: Context) {
+  fetchPropertyDetails(
+    prt: any,
+    args: { _id: string },
+    { Property, req }: Context
+  ) {
+    console.log(req.headers.cookie);
+    console.log(req.cookies);
     return Property.findById(args._id, null, { populate: "agent" });
   },
   async agentPropertiesCount(

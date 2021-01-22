@@ -9,10 +9,11 @@ import { User } from "./models/User";
 import { Agent } from "./models/Agent";
 import { Property } from "./models/Property";
 import { Lead } from "./models/Lead";
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.set("trust proxy", "1");
-
+app.use(cookieParser());
 // app.use(
 //   cookieSession({
 //     secret: process.env.JWT_SECRET,
