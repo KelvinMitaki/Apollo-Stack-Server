@@ -7,6 +7,7 @@ export interface LeadAttrs {
   message: string;
   property: mongoose.Types.ObjectId;
   agent: mongoose.Types.ObjectId;
+  month: string;
 }
 
 export interface LeadDoc extends mongoose.Document {
@@ -16,6 +17,7 @@ export interface LeadDoc extends mongoose.Document {
   message: string;
   property: mongoose.Types.ObjectId;
   agent: mongoose.Types.ObjectId;
+  month: string;
   createdAt: Date;
 }
 
@@ -50,6 +52,10 @@ const LeadSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Agent"
+    },
+    month: {
+      type: String,
+      required: true
     }
   },
   {

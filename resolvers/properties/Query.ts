@@ -4,7 +4,7 @@ import { AgentDoc } from "../../models/Agent";
 import { PropertyDoc } from "../../models/Property";
 import { Context } from "../resolvers";
 
-const months = [
+export const months = [
   "Jan",
   "Feb",
   "Mar",
