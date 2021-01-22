@@ -21,6 +21,10 @@ const VisitorSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Property"
+    },
+    month: {
+      type: String,
+      required: true
     }
   },
   {

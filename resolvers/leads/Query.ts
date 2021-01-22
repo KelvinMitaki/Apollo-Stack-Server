@@ -39,9 +39,19 @@ export const LeadQueries = {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6)
           }
         }
+      },
+      {
+        $group: {
+          _id: {
+            month: "$month"
+          },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: { month: "$_id.month", count: 1, _id: 0 }
       }
     ]);
-    console.log(views);
-    return [{ month: "Jan", count: 3 }];
+    return views;
   }
 };
