@@ -37,9 +37,9 @@ export const LeadQueries = {
       {
         $match: {
           createdAt: {
-            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6),
-            agent: agent._id
-          }
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
+          },
+          agent: agent._id
         }
       },
       {
@@ -58,9 +58,9 @@ export const LeadQueries = {
       {
         $match: {
           createdAt: {
-            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6),
-            agent: agent._id
-          }
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
+          },
+          agent: agent._id
         }
       },
       {
