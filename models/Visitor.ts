@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 export interface VisitorAttrs {
   month: string;
   property: mongoose.Types.ObjectId;
+  agent: mongoose.Types.ObjectId;
 }
 
 export interface VisitorDoc extends mongoose.Document {
   month: string;
   property: mongoose.Types.ObjectId;
+  agent: mongoose.Types.ObjectId;
   createdAt: Date;
 }
 
@@ -21,6 +23,11 @@ const VisitorSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Property"
+    },
+    agent: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "Agent"
     },
     month: {
       type: String,

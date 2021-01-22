@@ -3,7 +3,6 @@ import { Context } from "../resolvers";
 
 export const UserQueries = {
   async currentUser(prt: any, args: any, { User, req, Agent }: Context) {
-    console.log(req.cookies);
     if (!req.cookies || Object.keys(req.cookies).length === 0) {
       return null;
     }

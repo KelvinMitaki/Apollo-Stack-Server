@@ -27,12 +27,18 @@ export const LeadQueries = {
       count: Lead.countDocuments({ agent: agent._id })
     };
   },
-  async countViewsAndLeads(prt: any, args: any, { Visitor, Lead }: Context) {
+  async countViewsAndLeadsCount(
+    prt: any,
+    args: any,
+    { Visitor, Lead, req }: Context
+  ) {
+    const agent = await isAuthorized(req, "agent");
     const views = await Visitor.aggregate([
       {
         $match: {
           createdAt: {
-            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6)
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6),
+            agent: agent._id
           }
         }
       },
@@ -52,7 +58,8 @@ export const LeadQueries = {
       {
         $match: {
           createdAt: {
-            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6)
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 6),
+            agent: agent._id
           }
         }
       },

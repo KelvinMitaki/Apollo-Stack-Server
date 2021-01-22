@@ -273,9 +273,13 @@ export const PropertyQueries = {
     { Property, req, Visitor, res }: Context
   ) {
     if (!req.cookies["visitor"] && !req.cookies["client_visitor"]) {
+      const property: PropertyDoc = await Property.findById(args._id, null, {
+        populate: "agent"
+      });
       const visitor = Visitor.build({
         property: args._id,
-        month: months[new Date().getMonth()]
+        month: months[new Date().getMonth()],
+        agent: ((property.agent as unknown) as AgentDoc)._id
       });
       await visitor.save();
       res.cookie("visitor", visitor._id, {
@@ -283,9 +287,6 @@ export const PropertyQueries = {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5000),
         ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
         secure: process.env.NODE_ENV !== "development"
-      });
-      const property: PropertyDoc = await Property.findById(args._id, null, {
-        populate: "agent"
       });
       return { ...property.toObject(), visitor: visitor._id };
     }
