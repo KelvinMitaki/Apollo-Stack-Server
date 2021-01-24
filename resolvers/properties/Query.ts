@@ -39,7 +39,10 @@ export const PropertyQueries = {
     { req, Property }: Context
   ) {
     const agent: AgentDoc = await isAuthorized(req, "agent");
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       return Property.find({ agent: agent._id }, null, {
         limit: args.limit,
         skip: args.offset
@@ -125,7 +128,10 @@ export const PropertyQueries = {
     },
     { Property }: Context
   ) {
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       if (args.filter === "sale" || args.filter === "rent") {
         return Property.find({ type: args.filter }, null, {
           limit: args.limit,
@@ -209,7 +215,10 @@ export const PropertyQueries = {
     },
     { Property }: Context
   ) {
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       if (args.filter === "rent" || args.filter === "sale") {
         return { count: Property.countDocuments({ type: args.filter }) };
       }
@@ -309,7 +318,10 @@ export const PropertyQueries = {
     { Property, req }: Context
   ) {
     const agent = await isAuthorized(req, "agent");
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       return { count: Property.countDocuments({ agent: agent._id }) };
     }
     if (args.values) {
@@ -452,7 +464,10 @@ export const PropertyQueries = {
     { Property, req }: Context
   ) {
     const agent: AgentDoc = await isAuthorized(req, "agent");
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       return Property.find(
         { agent: agent._id, expiryDate: { $lt: new Date() } },
         null,
@@ -532,7 +547,10 @@ export const PropertyQueries = {
     { Property, req }: Context
   ) {
     const agent = await isAuthorized(req, "agent");
-    if (!args.values) {
+    if (
+      !args.values ||
+      (args.values && Object.keys(args.values).length === 0)
+    ) {
       return {
         count: Property.countDocuments({
           agent: agent._id,
