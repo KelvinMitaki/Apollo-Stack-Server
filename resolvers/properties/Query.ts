@@ -299,6 +299,14 @@ export const PropertyQueries = {
       });
       return { ...property.toObject(), visitor: visitor._id };
     }
+    let cookie;
+    if (req.cookies["visitor"]) {
+      cookie = req.cookies["visitor"];
+    }
+    if (!cookie) {
+      cookie = req.cookies["client_visitor"];
+    }
+    console.log(cookie);
     return Property.findById(args._id, null, { populate: "agent" });
   },
   async agentPropertiesCount(
