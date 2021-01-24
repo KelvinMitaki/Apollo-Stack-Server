@@ -4,12 +4,14 @@ export interface VisitorAttrs {
   month: string;
   property: mongoose.Types.ObjectId;
   agent: mongoose.Types.ObjectId;
+  visitor: mongoose.Types.ObjectId;
 }
 
 export interface VisitorDoc extends mongoose.Document {
   month: string;
   property: mongoose.Types.ObjectId;
   agent: mongoose.Types.ObjectId;
+  visitor: mongoose.Types.ObjectId;
   createdAt: Date;
 }
 
@@ -31,6 +33,10 @@ const VisitorSchema = new mongoose.Schema(
     },
     month: {
       type: String,
+      required: true
+    },
+    visitor: {
+      type: mongoose.Types.ObjectId,
       required: true
     }
   },

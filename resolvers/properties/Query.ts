@@ -288,10 +288,11 @@ export const PropertyQueries = {
       const visitor = Visitor.build({
         property: args._id,
         month: months[new Date().getMonth()],
-        agent: ((property.agent as unknown) as AgentDoc)._id
+        agent: ((property.agent as unknown) as AgentDoc)._id,
+        visitor: mongoose.Types.ObjectId()
       });
       await visitor.save();
-      res.cookie("visitor", visitor._id, {
+      res.cookie("visitor", visitor.visitor, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5000),
         ...(process.env.NODE_ENV !== "development" && { sameSite: "none" }),
