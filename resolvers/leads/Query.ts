@@ -27,7 +27,7 @@ export const LeadQueries = {
       count: Lead.countDocuments({ agent: agent._id })
     };
   },
-  async countViewsAndLeadsCount(
+  async viewsAndLeadsCount(
     prt: any,
     args: any,
     { Visitor, Lead, req }: Context
@@ -61,6 +61,58 @@ export const LeadQueries = {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
           },
           agent: agent._id
+        }
+      },
+      {
+        $group: {
+          _id: {
+            month: "$month"
+          },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: { month: "$_id.month", count: 1, _id: 0 }
+      }
+    ]);
+    return { views, leads };
+  },
+  async propertyStatistics(
+    prt: any,
+    args: { _id: string },
+    { Visitor, Lead, req }: Context
+  ) {
+    const agent = await isAuthorized(req, "agent");
+    const views = await Visitor.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
+          },
+          agent: agent._id,
+          property: args._id
+        }
+      },
+      {
+        $group: {
+          _id: {
+            month: "$month"
+          },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: { month: "$_id.month", count: 1, _id: 0 }
+      }
+    ]);
+    const leads = await Lead.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
+          },
+          agent: agent._id,
+          property: args._id
         }
       },
       {
