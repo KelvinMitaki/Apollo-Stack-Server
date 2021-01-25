@@ -300,15 +300,30 @@ export const PropertyQueries = {
       });
       return { ...property.toObject(), visitor: visitor._id };
     }
-    let cookie;
+    let visitorId;
     if (req.cookies["visitor"]) {
-      cookie = req.cookies["visitor"];
+      visitorId = req.cookies["visitor"];
     }
-    if (!cookie) {
-      cookie = req.cookies["client_visitor"];
+    if (!visitorId) {
+      visitorId = req.cookies["client_visitor"];
     }
-    console.log(cookie);
-    return Property.findById(args._id, null, { populate: "agent" });
+    const property: PropertyDoc = await Property.findById(args._id, null, {
+      populate: "agent"
+    });
+    const propertyExists = await Visitor.exists({
+      property: args._id,
+      visitor: visitorId
+    });
+    if (!propertyExists) {
+      const visitor = Visitor.build({
+        property: args._id,
+        month: months[new Date().getMonth()],
+        agent: ((property.agent as unknown) as AgentDoc)._id,
+        visitor: visitorId
+      });
+      await visitor.save();
+    }
+    return property;
   },
   async agentPropertiesCount(
     prt: any,
