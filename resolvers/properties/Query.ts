@@ -637,5 +637,17 @@ export const PropertyQueries = {
     return {
       count: 0
     };
+  },
+  fetchFeaturedProperties(prt: any, args: any, { Property }: Context) {
+    return Property.find(
+      {
+        // @ts-ignore
+        plinthArea: { $ne: null },
+        // @ts-ignore
+        parkingLots: { $ne: null }
+      },
+      null,
+      { limit: 6, populate: "agent" }
+    ).slice("images", 1);
   }
 };

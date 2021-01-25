@@ -37,6 +37,7 @@ export const typeDefs = gql`
     propertyStatistics(_id: ID!): ViewsAndLeadsCount!
     propertyStatisticsMessages(_id: ID!, offset: Int!, limit: Int!): [Lead!]!
     propertyStatisticsMessagesCount(_id: ID!): Count!
+    fetchFeaturedProperties: [Property!]!
   }
   type Mutation {
     registerUser(values: RegisterInput!): User!
