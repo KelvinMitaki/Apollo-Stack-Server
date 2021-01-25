@@ -129,5 +129,16 @@ export const LeadQueries = {
       }
     ]);
     return { views, leads };
+  },
+  async propertyStatisticsMessages(
+    prt: any,
+    args: { _id: string; offset: number; limit: number },
+    { Lead, req }: Context
+  ) {
+    const agent: AgentDoc = await isAuthorized(req, "agent");
+    return Lead.find({ agent: agent._id }, null, {
+      skip: args.offset,
+      limit: args.limit
+    });
   }
 };

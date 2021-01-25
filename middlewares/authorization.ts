@@ -5,7 +5,6 @@ import { ForbiddenError } from "apollo-server-express";
 import { User, UserDoc } from "../models/User";
 
 export const isAuthorized = async (req: Request, usr: "user" | "agent") => {
-  console.log(req.cookies);
   if (!req.cookies || Object.keys(req.cookies).length === 0) {
     throw new ForbiddenError("unauthorized");
   }
