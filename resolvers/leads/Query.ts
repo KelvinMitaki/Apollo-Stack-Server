@@ -136,9 +136,19 @@ export const LeadQueries = {
     { Lead, req }: Context
   ) {
     const agent: AgentDoc = await isAuthorized(req, "agent");
-    return Lead.find({ agent: agent._id }, null, {
+    return Lead.find({ agent: agent._id, property: args._id }, null, {
       skip: args.offset,
       limit: args.limit
     });
+  },
+  async propertyStatisticsMessagesCount(
+    prt: any,
+    args: { _id: string },
+    { Lead, req }: Context
+  ) {
+    const agent: AgentDoc = await isAuthorized(req, "agent");
+    return {
+      count: Lead.countDocuments({ agent: agent._id, property: args._id })
+    };
   }
 };
