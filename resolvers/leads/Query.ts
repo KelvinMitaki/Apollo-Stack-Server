@@ -39,7 +39,7 @@ export const LeadQueries = {
           createdAt: {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
           },
-          agent: agent._id
+          agent: mongoose.Types.ObjectId(agent._id)
         }
       },
       {
@@ -60,7 +60,7 @@ export const LeadQueries = {
           createdAt: {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
           },
-          agent: agent._id
+          agent: mongoose.Types.ObjectId(agent._id)
         }
       },
       {
@@ -82,15 +82,16 @@ export const LeadQueries = {
     args: { _id: string },
     { Visitor, Lead, req }: Context
   ) {
-    const agent = await isAuthorized(req, "agent");
+    const agent: AgentDoc = await isAuthorized(req, "agent");
+
     const views = await Visitor.aggregate([
       {
         $match: {
           createdAt: {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
           },
-          agent: agent._id,
-          property: args._id
+          agent: mongoose.Types.ObjectId(agent._id),
+          property: mongoose.Types.ObjectId(args._id)
         }
       },
       {
@@ -111,8 +112,8 @@ export const LeadQueries = {
           createdAt: {
             $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30.4167 * 7)
           },
-          agent: agent._id,
-          property: args._id
+          agent: mongoose.Types.ObjectId(agent._id),
+          property: mongoose.Types.ObjectId(args._id)
         }
       },
       {
