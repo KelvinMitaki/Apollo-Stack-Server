@@ -138,7 +138,8 @@ export const LeadQueries = {
     const agent: AgentDoc = await isAuthorized(req, "agent");
     return Lead.find({ agent: agent._id, property: args._id }, null, {
       skip: args.offset,
-      limit: args.limit
+      limit: args.limit,
+      sort: { _id: -1 }
     });
   },
   async propertyStatisticsMessagesCount(
